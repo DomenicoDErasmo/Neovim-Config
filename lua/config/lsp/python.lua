@@ -9,9 +9,10 @@ if not configs.ty then
 			cmd = { os.getenv("HOME") .. "/.local/bin/ty", "server" },
 			filetypes = { "python" },
 			root_dir = function(fname)
-				-- Look for pyproject.toml in current directory and parent directories
-				-- This will find atl/pyproject.toml before dev/pyproject.toml
-				return lspconfig.util.root_pattern("pyproject.toml")(fname)
+				-- Prioritize ty.toml (repo root) so ty finds its config correctly.
+				-- pyproject.toml exists in many subdirectories and would otherwise
+				-- anchor ty to a subdir that has no ty.toml.
+				return lspconfig.util.root_pattern("ty.toml")(fname)
 					or lspconfig.util.root_pattern(".git")(fname)
 			end,
 			settings = {},
