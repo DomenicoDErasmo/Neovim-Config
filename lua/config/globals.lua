@@ -14,7 +14,6 @@ vim.o.termguicolors = true
 
 vim.o.foldcolumn = "1"
 vim.o.foldenable = true
-vim.o.linebreak = true
 vim.o.textwidth = 0
 -- To ensure a space between fold level and relative number
 vim.o.statuscolumn = "%C %{v:relnum?v:relnum:v:lnum} "
@@ -40,12 +39,13 @@ vim.o.hlsearch = true
 -- Persistent undofile across sections
 vim.o.undofile = true
 
--- Set colorcolumn and textwidth for markdown files
+-- Set colorcolumn, textwidth, and linebreak for markdown files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
     vim.opt_local.colorcolumn = "81"
     vim.opt_local.textwidth = 80
+    vim.opt_local.linebreak = true
   end,
 })
 

@@ -60,7 +60,7 @@ return {
   },
 
   -- Colorscheme
-  { "Mofiqul/vscode.nvim",                       lazy = false,                                        priority = 1000 },
+  { "Mofiqul/vscode.nvim",    lazy = false, priority = 1000 },
 
   -- Autocomplete
   {
@@ -73,7 +73,7 @@ return {
   },
 
   -- File browser
-  { "stevearc/oil.nvim",                         cmd = "Oil" },
+  { "stevearc/oil.nvim",      cmd = "Oil" },
 
   -- Terminal in Vim window
   { "akinsho/toggleterm.nvim" },
@@ -84,10 +84,17 @@ return {
   -- Rainbow delimiters
   -- Pinned because errors throw when I insert certain text
   -- Checked as of 2026-04-14
-  { "HiPhish/rainbow-delimiters.nvim",           commit = "50080ed0f44dbc18ae13b81278a01b951a06127a", event = "BufReadPost" },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    commit = "50080ed0f44dbc18ae13b81278a01b951a06127a",
+    event = "BufReadPost",
+    config = function()
+      require("config.rainbow_delimiters")
+    end
+  },
 
   -- Obsidian
-  { "obsidian-nvim/obsidian.nvim" },
+  { "obsidian-nvim/obsidian.nvim",               ft = "markdown" },
 
   -- Markdown rendering
   { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown" } },
@@ -111,8 +118,7 @@ return {
   { "folke/flash.nvim",                          event = "VeryLazy" },
 
   -- Better fold
-  { "kevinhwang91/promise-async" },
-  { "kevinhwang91/nvim-ufo" },
+  { "kevinhwang91/nvim-ufo",                     dependencies = { "kevinhwang91/promise-async" } },
 
   -- View all LSP errors at once
   { "folke/trouble.nvim",                        cmd = "Trouble" },
