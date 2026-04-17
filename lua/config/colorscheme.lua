@@ -26,6 +26,13 @@ require("vscode").setup({
 		-- use colors from this colorscheme by requiring vscode.colors!
 		Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
 		ColorColumn = { bg = "LightGray" },
+		-- Fix Python kwarg names to VSCode's light blue (#9CDCFE)
+		["@variable.parameter"] = { fg = c.vscLightBlue },
+		-- Fix Python builtins (None/True/False) to VSCode's light blue (#569CD6)
+		["@lsp.type.builtinConstant.python"] = { fg = c.vscBlue },
+		["@lsp.type.builtinType.python"] = { fg = c.vscBlue },
+		["@lsp.type.keyword.python"] = { fg = c.vscBlue },
+		pythonBuiltin = { fg = c.vscBlue },
 	},
 })
 
