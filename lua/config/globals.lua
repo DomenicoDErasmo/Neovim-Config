@@ -45,6 +45,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Set colorcolumn for Python files (black formatter uses 88-char line length)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.colorcolumn = "88"
+    vim.cmd("highlight ColorColumn guibg=#636363")
+  end,
+})
+
 -- Configure how diagnostics are shown
 vim.diagnostic.config({
   virtual_text = { prefix = "●" },

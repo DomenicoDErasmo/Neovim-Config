@@ -31,11 +31,3 @@ require("vscode").setup({
 
 -- load the theme without affecting devicon colors.
 vim.cmd.colorscheme("vscode")
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "python",
-	callback = function()
-		vim.opt_local.colorcolumn = "88"
-		vim.cmd("highlight ColorColumn guibg=#636363")
-	end,
-})

@@ -17,18 +17,13 @@ local function find_yaml_ls()
 	if #versions > 0 then
 		return versions[#versions] -- prefer the last (highest) version
 	end
-	return "yaml-language-server" -- let lspconfig surface the error
+	return "yaml-language-server" -- let nvim surface the error
 end
 
-require("lspconfig").yamlls.setup({
+vim.lsp.config("yamlls", {
 	cmd = { find_yaml_ls(), "--stdio" },
-	root_dir = require("lspconfig.util").root_pattern(".git", ".yaml-root"),
-	settings = {
-		yaml = {
-			-- gets from config repo
-			schemas = {
-				["/usr/scratch/domenico/checkouts/config/conf/commissions/incentives/incentives_schema.json"] = "incentive_programs*.yaml",
-			},
-		},
-	},
+	filetypes = { "yaml", "yaml.docker-compose" },
+	root_markers = { ".yaml-root", ".git" },
 })
+
+vim.lsp.enable("yamlls")

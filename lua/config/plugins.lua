@@ -2,7 +2,6 @@ return {
 	-- LSP
 	{
 		"neovim/nvim-lspconfig",
-		tag = "v1.8.0",
 		event = "BufReadPre",
 		dependencies = { "folke/neoconf.nvim" },
 		config = function()
@@ -35,7 +34,7 @@ return {
 	},
 
 	-- Fuzzy file search
-	{ "nvim-telescope/telescope.nvim",            tag = "0.1.8" },
+	{ "nvim-telescope/telescope.nvim", },
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
 	-- Icons
@@ -59,7 +58,6 @@ return {
 	-- Treesitter - Syntax parser
 	{
 		"nvim-treesitter/nvim-treesitter",
-		tag = "v0.9.2",
 		event = "BufReadPost",
 		config = function()
 			require("config.treesitter")
@@ -93,7 +91,6 @@ return {
 	-- Checked as of 2026-04-14
 	{
 		"HiPhish/rainbow-delimiters.nvim",
-		commit = "50080ed0f44dbc18ae13b81278a01b951a06127a",
 		event = "BufReadPost",
 		config = function()
 			require("config.rainbow_delimiters")
