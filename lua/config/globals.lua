@@ -5,15 +5,12 @@ vim.g.maplocalleader = " "
 
 vim.o.number = true
 vim.o.relativenumber = true
-vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.softtabstop = 2
-vim.o.autoindent = true
 vim.o.termguicolors = true
 
 vim.o.foldcolumn = "1"
-vim.o.foldenable = true
 vim.o.textwidth = 0
 -- To ensure a space between fold level and relative number
 vim.o.statuscolumn = "%C %{v:relnum?v:relnum:v:lnum} "
@@ -34,7 +31,6 @@ vim.o.signcolumn = "yes"
 -- Custom search
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.o.hlsearch = true
 
 -- Persistent undofile across sections
 vim.o.undofile = true
