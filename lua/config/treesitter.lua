@@ -11,6 +11,7 @@ require("nvim-treesitter").setup({
 		"bash",
 		"ini",
 		"yaml",
+		"proto",
 	},
 	highlight = {
 		enable = true,

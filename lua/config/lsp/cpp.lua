@@ -11,7 +11,7 @@ vim.lsp.config("clangd", {
 		"--completion-style=detailed",
 		"--function-arg-placeholders=true",
 	},
-	filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+	filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 	root_markers = { "compile_commands.json", ".clangd", ".clang-format", ".clang-tidy", ".git" },
 })
 

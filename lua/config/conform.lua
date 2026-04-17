@@ -26,6 +26,7 @@ require("conform").setup({
     markdown = { "prettier" },
     python = { "ruff_fix", "ruff_format" },
     cpp = { "clang-format" },
+    proto = { "buf" },
   },
   format_on_save = {
     timeout_ms = 1000,

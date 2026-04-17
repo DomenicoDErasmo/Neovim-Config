@@ -10,6 +10,7 @@ return {
 			require("config.lsp.lua")
 			require("config.lsp.python")
 			require("config.lsp.yaml")
+			require("config.lsp.proto")
 		end,
 	},
 
