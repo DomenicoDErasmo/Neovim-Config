@@ -6,7 +6,7 @@ return {
     event = "BufReadPre",
     dependencies = { "folke/neoconf.nvim" },
     config = function()
-      require("config.neoconf")
+      require("neoconf").setup({})
       require("config.lsp.cpp")
       require("config.lsp.lua")
       require("config.lsp.python")
@@ -80,13 +80,13 @@ return {
   },
 
   -- File browser
-  { "stevearc/oil.nvim", },
+  { "stevearc/oil.nvim", config = function() require("oil").setup({}) end },
 
   -- Terminal in Vim window
   { "akinsho/toggleterm.nvim" },
 
   -- Autopairs
-  { "windwp/nvim-autopairs" },
+  { "windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup({}) end },
 
   -- Rainbow delimiters
   -- Pinned because errors throw when I insert certain text
@@ -125,7 +125,7 @@ return {
   { "folke/which-key.nvim",               event = "VeryLazy" },
 
   -- Indentation guide
-  { "lukas-reineke/indent-blankline.nvim" },
+  { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end },
 
   -- Diff views
   { "sindrets/diffview.nvim",             cmd = { "DiffviewOpen", "DiffviewClose" } },
@@ -134,13 +134,13 @@ return {
   { "NeogitOrg/neogit",                   cmd = { "Neogit" } },
 
   -- Label-based jumping
-  { "folke/flash.nvim",                   event = "VeryLazy" },
+  { "folke/flash.nvim", event = "VeryLazy", config = function() require("flash").setup({}) end },
 
   -- Better fold
   { "kevinhwang91/nvim-ufo",              dependencies = { "kevinhwang91/promise-async" } },
 
   -- View all LSP errors at once
-  { "folke/trouble.nvim", },
+  { "folke/trouble.nvim", config = function() require("trouble").setup({}) end },
 
   -- Visualize undo history
   { "mbbill/undotree",                    cmd = "UndotreeToggle" },

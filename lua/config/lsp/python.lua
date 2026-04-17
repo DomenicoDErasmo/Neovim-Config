@@ -20,20 +20,6 @@ if not configs.ty then
 	}
 end
 
--- Suppress -32802 (ContentModified): fired when a request is cancelled because
--- the document changed mid-flight. Comes through vim.notify, not on_error.
--- Guard against double-wrapping on re-source.
-if not package.loaded["_ty_notify_filtered"] then
-	package.loaded["_ty_notify_filtered"] = true
-	local _notify = vim.notify
-	vim.notify = function(msg, level, opts)
-		if type(msg) == "string" and msg:find("-32802", 1, true) then
-			return
-		end
-		_notify(msg, level, opts)
-	end
-end
-
 -- Setup ty language server (reads config from pyproject.toml)
 lspconfig.ty.setup({
 	capabilities = capabilities,
