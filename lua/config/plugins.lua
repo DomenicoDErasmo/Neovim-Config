@@ -130,23 +130,14 @@ return {
 	-- Git UI
 	{ "NeogitOrg/neogit",                    cmd = { "Neogit" } },
 
-	-- Label-based jumping
-	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("flash").setup({})
-		end
-	},
-
 	-- Better fold
-	{ "kevinhwang91/nvim-ufo", dependencies = { "kevinhwang91/promise-async" } },
+	{ "kevinhwang91/nvim-ufo",               dependencies = { "kevinhwang91/promise-async" } },
 
 	-- View all LSP errors at once
-	{ "folke/trouble.nvim",    config = function() require("config.trouble") end },
+	{ "folke/trouble.nvim",                  config = function() require("config.trouble") end },
 
 	-- Visualize undo history
-	{ "mbbill/undotree",       cmd = "UndotreeToggle" },
+	{ "mbbill/undotree",                     cmd = "UndotreeToggle" },
 
 	-- LSP messages
 	{ "rcarriga/nvim-notify", },
