@@ -25,7 +25,14 @@ return {
       require("config.conform")
     end,
   },
-  { "mfussenegger/nvim-lint",                   ft = { "markdown", "python" } },
+  {
+    "mfussenegger/nvim-lint",
+    ft = { "markdown", "python" },
+    config = function()
+      require(
+        "config.nvim_lint")
+    end,
+  },
 
   -- Fuzzy file search
   { "nvim-telescope/telescope.nvim",            tag = "0.1.8" },
@@ -73,7 +80,7 @@ return {
   },
 
   -- File browser
-  { "stevearc/oil.nvim",      cmd = "Oil" },
+  { "stevearc/oil.nvim", },
 
   -- Terminal in Vim window
   { "akinsho/toggleterm.nvim" },
@@ -94,38 +101,50 @@ return {
   },
 
   -- Obsidian
-  { "obsidian-nvim/obsidian.nvim",               ft = "markdown" },
+  {
+    "obsidian-nvim/obsidian.nvim",
+    ft = "markdown",
+    config = function()
+      require("config.obsidian")
+    end,
+  },
 
   -- Markdown rendering
-  { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown" } },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    config = function()
+      require("config.render_markdown")
+    end,
+  },
 
   -- Rainbow CSV
   { "mechatroner/rainbow_csv" },
 
   -- Keybind popup
-  { "folke/which-key.nvim",                      event = "VeryLazy" },
+  { "folke/which-key.nvim",               event = "VeryLazy" },
 
   -- Indentation guide
   { "lukas-reineke/indent-blankline.nvim" },
 
   -- Diff views
-  { "sindrets/diffview.nvim",                    cmd = { "DiffviewOpen", "DiffviewClose" } },
+  { "sindrets/diffview.nvim",             cmd = { "DiffviewOpen", "DiffviewClose" } },
 
   -- Git UI
-  { "NeogitOrg/neogit",                          cmd = { "Neogit" } },
+  { "NeogitOrg/neogit",                   cmd = { "Neogit" } },
 
   -- Label-based jumping
-  { "folke/flash.nvim",                          event = "VeryLazy" },
+  { "folke/flash.nvim",                   event = "VeryLazy" },
 
   -- Better fold
-  { "kevinhwang91/nvim-ufo",                     dependencies = { "kevinhwang91/promise-async" } },
+  { "kevinhwang91/nvim-ufo",              dependencies = { "kevinhwang91/promise-async" } },
 
   -- View all LSP errors at once
-  { "folke/trouble.nvim",                        cmd = "Trouble" },
+  { "folke/trouble.nvim", },
 
   -- Visualize undo history
-  { "mbbill/undotree",                           cmd = "UndotreeToggle" },
+  { "mbbill/undotree",                    cmd = "UndotreeToggle" },
 
   -- LSP messages
-  { "rcarriga/nvim-notify",                      event = "VeryLazy" },
+  { "rcarriga/nvim-notify", },
 }

@@ -11,12 +11,13 @@ require("conform").setup({
     },
     ruff_fix = {
       command = paths.ruff,
-      args = vim.list_extend({ "check", "--fix" }, paths.ruff_args),
+      args = vim.list_extend({ "check", "--fix" }, paths.ruff_stdin_args),
       stdin = true,
+      exit_codes = { 0, 1 },
     },
     ruff_format = {
       command = paths.ruff,
-      args = vim.list_extend({ "format" }, paths.ruff_args),
+      args = vim.list_extend({ "format" }, paths.ruff_stdin_args),
       stdin = true,
     },
   },

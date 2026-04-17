@@ -6,7 +6,7 @@ local home = os.getenv("HOME")
 lint.linters["markdownlint-cli2"].cmd = home .. "/node_modules/.bin/markdownlint-cli2"
 
 lint.linters["ruff"].cmd = paths.ruff
-lint.linters["ruff"].args = vim.list_extend({ "check" }, paths.ruff_args)
+lint.linters["ruff"].args = vim.list_extend({ "check" }, paths.ruff_lint_args)
 
 lint.linters_by_ft = {
   markdown = { "markdownlint-cli2" },
@@ -14,8 +14,10 @@ lint.linters_by_ft = {
 }
 
 vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
-  pattern = { "*.md", "*.py" },
   callback = function()
-    lint.try_lint()
+    local ft = vim.bo.filetype
+    if ft == "python" or ft == "markdown" then
+      lint.try_lint()
+    end
   end,
 })
