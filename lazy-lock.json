@@ -8,7 +8,7 @@
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lualine.nvim": { "branch": "master", "commit": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c" },
   "neoconf.nvim": { "branch": "main", "commit": "ecdb0c9bc3f3373e11be4c97e461d16b52d532d0" },
-  "neogit": { "branch": "master", "commit": "e06745228600a585b88726fc9fba44a373c15a47" },
+  "neogit": { "branch": "master", "commit": "e906fce7e44ae562f06345be99a7db02f8315236" },
   "nvim-autopairs": { "branch": "master", "commit": "59bce2eef357189c3305e25bc6dd2d138c1683f5" },
   "nvim-lint": { "branch": "master", "commit": "eab58b48eb11d7745c11c505e0f3057165902461" },
   "nvim-lspconfig": { "branch": "master", "commit": "cb33dea610b7eff240985be9f6fe219920e630ef" },

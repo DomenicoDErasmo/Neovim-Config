@@ -12,8 +12,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, { buffer = buf, desc = "Type definition" })
     -- Rename symbol
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol" })
-    -- Signature help (in insert mode)
-    vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { buffer = buf })
     -- Code actions
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code action" })
 
