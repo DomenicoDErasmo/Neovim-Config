@@ -33,6 +33,9 @@ require("vscode").setup({
 		["@lsp.type.builtinType.python"] = { fg = c.vscBlue },
 		["@lsp.type.keyword.python"] = { fg = c.vscBlue },
 		pythonBuiltin = { fg = c.vscBlue },
+		-- Fix Python self/cls to VSCode's blue (#569CD6)
+		["@variable.builtin"] = { fg = c.vscBlue },
+		["@lsp.type.selfParameter.python"] = { fg = c.vscBlue },
 	},
 })
 
