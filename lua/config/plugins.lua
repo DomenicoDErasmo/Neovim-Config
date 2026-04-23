@@ -65,6 +65,16 @@ return {
 		end,
 	},
 
+	-- Treesitter text objects (select/move/swap by function, class, argument, block)
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		event = "BufReadPost",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("config.treesitter_textobjects")
+		end,
+	},
+
 	-- Colorscheme
 	{ "Mofiqul/vscode.nvim",    lazy = false,                                               priority = 1000 },
 
@@ -76,6 +86,7 @@ return {
 		config = function()
 			require("config.blink")
 		end,
+		version = "1.*",
 	},
 
 	-- File browser

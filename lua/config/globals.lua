@@ -8,7 +8,9 @@ vim.o.relativenumber = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.softtabstop = 2
+vim.o.expandtab = true
 vim.o.termguicolors = true
+vim.o.clipboard = "unnamedplus"
 
 vim.o.foldcolumn = "1"
 vim.o.textwidth = 0
@@ -37,29 +39,29 @@ vim.o.undofile = true
 
 -- Set colorcolumn, textwidth, and linebreak for markdown files
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.colorcolumn = "81"
-    vim.opt_local.textwidth = 80
-    vim.opt_local.linebreak = true
-  end,
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.colorcolumn = "81"
+		vim.opt_local.textwidth = 80
+		vim.opt_local.linebreak = true
+	end,
 })
 
 -- Set colorcolumn for Python files (black formatter uses 88-char line length)
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "python",
-  callback = function()
-    vim.opt_local.colorcolumn = "88"
-    vim.cmd("highlight ColorColumn guibg=#636363")
-  end,
+	pattern = "python",
+	callback = function()
+		vim.opt_local.colorcolumn = "88"
+		vim.cmd("highlight ColorColumn guibg=#636363")
+	end,
 })
 
 -- Configure how diagnostics are shown
 vim.diagnostic.config({
-  virtual_text = { prefix = "●" },
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
-  float = { border = "rounded" },
+	virtual_text = { prefix = "●" },
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = { border = "rounded" },
 })
