@@ -34,7 +34,7 @@ vim.o.signcolumn = "yes"
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Persistent undofile across sections
+-- Persistent undofile across sessions
 vim.o.undofile = true
 
 -- Set colorcolumn, textwidth, and linebreak for markdown files

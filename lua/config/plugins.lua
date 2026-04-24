@@ -29,8 +29,7 @@ return {
 		"mfussenegger/nvim-lint",
 		ft = { "markdown", "python" },
 		config = function()
-			require(
-				"config.nvim_lint")
+			require("config.nvim_lint")
 		end,
 	},
 
