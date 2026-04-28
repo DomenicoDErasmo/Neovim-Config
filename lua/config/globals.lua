@@ -44,6 +44,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.colorcolumn = "81"
 		vim.opt_local.textwidth = 80
 		vim.opt_local.linebreak = true
+		vim.opt_local.conceallevel = 2
 	end,
 })
 

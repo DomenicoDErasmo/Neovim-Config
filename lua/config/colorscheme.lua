@@ -36,6 +36,10 @@ require("vscode").setup({
 		-- Fix Python self/cls to VSCode's blue (#569CD6)
 		["@variable.builtin"] = { fg = c.vscBlue },
 		["@lsp.type.selfParameter.python"] = { fg = c.vscBlue },
+		-- trouble.nvim cursor line in symbols panel
+		TroubleCursorLine = { bg = "#f38ba8" },
+		-- render-markdown.nvim inline code
+		MarkdownInlineCode = { fg = c.vscOrange, bg = "NONE" },
 	},
 })
 

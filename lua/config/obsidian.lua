@@ -2,15 +2,6 @@ local workspaces = {
   { name = "notes", path = "~/notes/" },
 }
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = vim.tbl_map(function(ws)
-    return vim.fn.expand(ws.path) .. "**/*.md"
-  end, workspaces),
-  callback = function()
-    vim.opt_local.conceallevel = 2
-  end,
-})
-
 require("obsidian").setup({
   workspaces = workspaces,
 
