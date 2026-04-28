@@ -73,6 +73,13 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle<cr>", { desc = "Symbols outline" })
+vim.keymap.set("n", "<leader>xr", "<cmd>Trouble lsp_references toggle<cr>", { desc = "LSP references" })
+
+-- Find and replace
+vim.keymap.set("n", "<leader>fr", "<cmd>GrugFar<cr>", { desc = "Find and replace (grug-far)" })
+vim.keymap.set("v", "<leader>fr", function()
+	require("grug-far").open()
+end, { desc = "Find and replace selection (grug-far)" })
 
 -- Undotree toggle
 vim.keymap.set("n", "<leader><F5>", vim.cmd.UndotreeToggle, { desc = "Toggle Undotree" })

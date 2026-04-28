@@ -11,6 +11,7 @@ return {
 			require("config.lsp.python")
 			require("config.lsp.yaml")
 			require("config.lsp.proto")
+			require("config.lsp.rust")
 		end,
 	},
 
@@ -89,7 +90,14 @@ return {
 	},
 
 	-- File browser
-	{ "stevearc/oil.nvim",      config = function() require("oil").setup({}) end },
+	{
+		"stevearc/oil.nvim",
+		config = function()
+			require("oil").setup({
+				win_options = { signcolumn = "yes:2" },
+			})
+		end,
+	},
 
 	-- Terminal in Vim window
 	{ "akinsho/toggleterm.nvim" },
@@ -152,4 +160,23 @@ return {
 
 	-- LSP messages
 	{ "rcarriga/nvim-notify", },
+
+	-- Git status in oil buffers
+	{
+		"refractalize/oil-git-status.nvim",
+		config = function()
+			require("oil-git-status").setup()
+		end,
+	},
+
+	-- Find and replace with ripgrep
+	{
+		"MagicDuck/grug-far.nvim",
+		cmd = "GrugFar",
+		config = function()
+			require("grug-far").setup({
+				openTargetWindow = { preferredLocation = "prev" },
+			})
+		end,
+	},
 }

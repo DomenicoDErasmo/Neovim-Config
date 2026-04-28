@@ -22,6 +22,7 @@ end
 
 vim.lsp.config("yamlls", {
 	cmd = { find_yaml_ls(), "--stdio" },
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
 	filetypes = { "yaml", "yaml.docker-compose" },
 	root_markers = { ".yaml-root", ".git" },
 })

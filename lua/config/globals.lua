@@ -15,7 +15,7 @@ vim.o.clipboard = "unnamedplus"
 vim.o.foldcolumn = "1"
 vim.o.textwidth = 0
 -- To ensure a space between fold level and relative number
-vim.o.statuscolumn = "%C %{v:relnum?v:relnum:v:lnum} "
+vim.o.statuscolumn = "%s%C %{v:relnum?v:relnum:v:lnum} "
 
 -- Start with everything unfolded
 vim.o.foldlevel = 99

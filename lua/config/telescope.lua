@@ -35,6 +35,7 @@ vim.keymap.set("n", "<leader>ft", function()
 		end,
 	})
 end, { desc = "Telescope live grep (filetype)" })
+vim.keymap.set("n", "<leader>fo", telescope_builtin.oldfiles, { desc = "Telescope recent files" })
 vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fs", telescope_builtin.lsp_document_symbols, { desc = "Document symbols" })
