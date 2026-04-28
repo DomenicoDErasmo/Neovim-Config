@@ -32,5 +32,8 @@ require("gitsigns").setup({
 		map("v", "<leader>hr", function()
 			gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 		end, { desc = "Reset hunk" })
+
+		map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage buffer" })
+		map("n", "<leader>hR", gs.reset_buffer, { desc = "Reset buffer" })
 	end,
 })
