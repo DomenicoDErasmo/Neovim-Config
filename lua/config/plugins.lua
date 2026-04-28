@@ -1,182 +1,181 @@
 return {
-	-- LSP
-	{
-		"neovim/nvim-lspconfig",
-		event = "BufReadPre",
-		dependencies = { "folke/neoconf.nvim" },
-		config = function()
-			require("neoconf").setup({})
-			require("config.lsp.cpp")
-			require("config.lsp.lua")
-			require("config.lsp.python")
-			require("config.lsp.yaml")
-			require("config.lsp.proto")
-			require("config.lsp.rust")
-		end,
-	},
+  -- LSP
+  {
+    "neovim/nvim-lspconfig",
+    event = "BufReadPre",
+    dependencies = { "folke/neoconf.nvim" },
+    config = function()
+      require("neoconf").setup({})
+      require("config.lsp.cpp")
+      require("config.lsp.lua")
+      require("config.lsp.python")
+      require("config.lsp.yaml")
+      require("config.lsp.proto")
+    end,
+  },
 
-	-- Async helpers (required by telescope, neogit, obsidian)
-	{ "nvim-lua/plenary.nvim",                    lazy = true },
+  -- Async helpers (required by telescope, neogit, obsidian)
+  { "nvim-lua/plenary.nvim",                    lazy = true },
 
-	-- Formatting and Linting
-	{
-		"stevearc/conform.nvim",
-		event = "BufWritePre",
-		config = function()
-			require("config.conform")
-		end,
-	},
-	{
-		"mfussenegger/nvim-lint",
-		ft = { "markdown", "python" },
-		config = function()
-			require("config.nvim_lint")
-		end,
-	},
+  -- Formatting and Linting
+  {
+    "stevearc/conform.nvim",
+    event = "BufWritePre",
+    config = function()
+      require("config.conform")
+    end,
+  },
+  {
+    "mfussenegger/nvim-lint",
+    ft = { "markdown", "python" },
+    config = function()
+      require("config.nvim_lint")
+    end,
+  },
 
-	-- Fuzzy file search
-	{ "nvim-telescope/telescope.nvim", },
-	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  -- Fuzzy file search
+  { "nvim-telescope/telescope.nvim", },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
-	-- Icons
-	{ "nvim-tree/nvim-web-devicons" },
+  -- Icons
+  { "nvim-tree/nvim-web-devicons" },
 
-	-- Git status for lines changed
-	{
-		"lewis6991/gitsigns.nvim",
-		event = "BufReadPost",
-		config = function()
-			require("config.gitsigns")
-		end,
-	},
+  -- Git status for lines changed
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPost",
+    config = function()
+      require("config.gitsigns")
+    end,
+  },
 
-	-- Customizable status bar
-	{ "nvim-lualine/lualine.nvim" },
+  -- Customizable status bar
+  { "nvim-lualine/lualine.nvim" },
 
-	-- Highlight TODO comments
-	{ "folke/todo-comments.nvim" },
+  -- Highlight TODO comments
+  { "folke/todo-comments.nvim" },
 
-	-- Treesitter - Syntax parser
-	{
-		"nvim-treesitter/nvim-treesitter",
-		event = "BufReadPost",
-		config = function()
-			require("config.treesitter")
-		end,
-	},
+  -- Treesitter - Syntax parser
+  {
+    "nvim-treesitter/nvim-treesitter",
+    event = "BufReadPost",
+    config = function()
+      require("config.treesitter")
+    end,
+  },
 
-	-- Treesitter text objects (select/move/swap by function, class, argument, block)
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		event = "BufReadPost",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			require("config.treesitter_textobjects")
-		end,
-	},
+  -- Treesitter text objects (select/move/swap by function, class, argument, block)
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "BufReadPost",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("config.treesitter_textobjects")
+    end,
+  },
 
-	-- Colorscheme
-	{ "Mofiqul/vscode.nvim",    lazy = false,                                               priority = 1000 },
+  -- Colorscheme
+  { "Mofiqul/vscode.nvim",    lazy = false,                                               priority = 1000 },
 
-	-- Autocomplete
-	{
-		"saghen/blink.cmp",
-		build = "cargo build --release",
-		event = "InsertEnter",
-		config = function()
-			require("config.blink")
-		end,
-		version = "1.*",
-	},
+  -- Autocomplete
+  {
+    "saghen/blink.cmp",
+    build = "cargo build --release",
+    event = "InsertEnter",
+    config = function()
+      require("config.blink")
+    end,
+    version = "1.*",
+  },
 
-	-- File browser
-	{
-		"stevearc/oil.nvim",
-		config = function()
-			require("oil").setup({
-				win_options = { signcolumn = "yes:2" },
-			})
-		end,
-	},
+  -- File browser
+  {
+    "stevearc/oil.nvim",
+    config = function()
+      require("oil").setup({
+        win_options = { signcolumn = "yes:2" },
+      })
+    end,
+  },
 
-	-- Terminal in Vim window
-	{ "akinsho/toggleterm.nvim" },
+  -- Terminal in Vim window
+  { "akinsho/toggleterm.nvim" },
 
-	-- Autopairs
-	{ "windwp/nvim-autopairs",  config = function() require("nvim-autopairs").setup({}) end },
+  -- Autopairs
+  { "windwp/nvim-autopairs",  config = function() require("nvim-autopairs").setup({}) end },
 
-	-- Rainbow delimiters
-	-- Pinned because errors throw when I insert certain text
-	-- Checked as of 2026-04-14
-	{
-		"HiPhish/rainbow-delimiters.nvim",
-		event = "BufReadPost",
-		config = function()
-			require("config.rainbow_delimiters")
-		end
-	},
+  -- Rainbow delimiters
+  -- Pinned because errors throw when I insert certain text
+  -- Checked as of 2026-04-14
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = "BufReadPost",
+    config = function()
+      require("config.rainbow_delimiters")
+    end
+  },
 
-	-- Obsidian
-	{
-		"obsidian-nvim/obsidian.nvim",
-		ft = "markdown",
-		config = function()
-			require("config.obsidian")
-		end,
-	},
+  -- Obsidian
+  {
+    "obsidian-nvim/obsidian.nvim",
+    ft = "markdown",
+    config = function()
+      require("config.obsidian")
+    end,
+  },
 
-	-- Markdown rendering
-	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		ft = { "markdown" },
-		config = function()
-			require("config.render_markdown")
-		end,
-	},
+  -- Markdown rendering
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    config = function()
+      require("config.render_markdown")
+    end,
+  },
 
-	-- Rainbow CSV
-	{ "mechatroner/rainbow_csv" },
+  -- Rainbow CSV
+  { "mechatroner/rainbow_csv" },
 
-	-- Keybind popup
-	{ "folke/which-key.nvim",                event = "VeryLazy" },
+  -- Keybind popup
+  { "folke/which-key.nvim",                event = "VeryLazy" },
 
-	-- Indentation guide
-	{ "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end },
+  -- Indentation guide
+  { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end },
 
-	-- Diff views
-	{ "sindrets/diffview.nvim",              cmd = { "DiffviewOpen", "DiffviewClose" } },
+  -- Diff views
+  { "sindrets/diffview.nvim",              cmd = { "DiffviewOpen", "DiffviewClose" } },
 
-	-- Git UI
-	{ "NeogitOrg/neogit",                    cmd = { "Neogit" } },
+  -- Git UI
+  { "NeogitOrg/neogit",                    cmd = { "Neogit" } },
 
-	-- Better fold
-	{ "kevinhwang91/nvim-ufo",               dependencies = { "kevinhwang91/promise-async" } },
+  -- Better fold
+  { "kevinhwang91/nvim-ufo",               dependencies = { "kevinhwang91/promise-async" } },
 
-	-- View all LSP errors at once
-	{ "folke/trouble.nvim",                  config = function() require("config.trouble") end },
+  -- View all LSP errors at once
+  { "folke/trouble.nvim",                  config = function() require("config.trouble") end },
 
-	-- Visualize undo history
-	{ "mbbill/undotree",                     cmd = "UndotreeToggle" },
+  -- Visualize undo history
+  { "mbbill/undotree",                     cmd = "UndotreeToggle" },
 
-	-- LSP messages
-	{ "rcarriga/nvim-notify", },
+  -- LSP messages
+  { "rcarriga/nvim-notify", },
 
-	-- Git status in oil buffers
-	{
-		"refractalize/oil-git-status.nvim",
-		config = function()
-			require("oil-git-status").setup()
-		end,
-	},
+  -- Git status in oil buffers
+  {
+    "refractalize/oil-git-status.nvim",
+    config = function()
+      require("oil-git-status").setup()
+    end,
+  },
 
-	-- Find and replace with ripgrep
-	{
-		"MagicDuck/grug-far.nvim",
-		cmd = "GrugFar",
-		config = function()
-			require("grug-far").setup({
-				openTargetWindow = { preferredLocation = "prev" },
-			})
-		end,
-	},
+  -- Find and replace with ripgrep
+  {
+    "MagicDuck/grug-far.nvim",
+    cmd = "GrugFar",
+    config = function()
+      require("grug-far").setup({
+        openTargetWindow = { preferredLocation = "prev" },
+      })
+    end,
+  },
 }
