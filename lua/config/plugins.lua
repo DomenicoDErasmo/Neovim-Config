@@ -168,6 +168,20 @@ return {
     end,
   },
 
+  -- Debugger
+  {
+    "mfussenegger/nvim-dap",
+    event = "VeryLazy",
+    dependencies = {
+      { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
+      "mfussenegger/nvim-dap-python",
+      "theHamsta/nvim-dap-virtual-text",
+    },
+    config = function()
+      require("config.dap")
+    end,
+  },
+
   -- Find and replace with ripgrep
   {
     "MagicDuck/grug-far.nvim",

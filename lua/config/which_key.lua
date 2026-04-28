@@ -8,4 +8,5 @@ require("which-key").add({
   { "<leader>s", group = "swap" },
   { "<leader>t", group = "terminal/tab" },
   { "<leader>r", group = "rename" },
+  { "<leader>d", group = "debug" },
 })
