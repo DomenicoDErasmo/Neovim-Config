@@ -11,7 +11,7 @@ vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = { version = "LuaJIT" },
-			workspace = { library = { vim.fn.stdpath("config") } },
+			workspace = { library = { vim.fn.stdpath("config"), vim.env.VIMRUNTIME } },
 			telemetry = { enable = false },
 			checkThirdParty = false,
 		},

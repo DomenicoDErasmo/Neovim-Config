@@ -7,6 +7,7 @@ lint.linters["markdownlint-cli2"].cmd = home .. "/node_modules/.bin/markdownlint
 
 lint.linters["ruff"].cmd = paths.ruff
 
+-- we have different configs in OTL and DEV
 local function ruff_args_for_buf()
   local bufname = vim.api.nvim_buf_get_name(0)
   local dir = vim.fn.fnamemodify(bufname, ":h")
