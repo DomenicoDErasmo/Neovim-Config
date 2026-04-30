@@ -169,6 +169,34 @@ return {
     end,
   },
 
+  -- Python venv selector
+  {
+    "linux-cultist/venv-selector.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    ft = "python",
+    keys = {
+      { "<leader>pv", "<cmd>VenvSelect<cr>", desc = "Select venv" },
+    },
+    config = function()
+      vim.schedule(function()
+        require("venv-selector").setup({
+          options = {
+            enable_default_searches = false,
+            on_venv_activate_callback = function()
+              local python = require("venv-selector").python()
+              if python then
+                require("dap-python").setup(python)
+              end
+            end,
+          },
+          search = {
+            hrt = { command = "$FD '/bin/python$' /usr/local/venvs --full-path --color never" },
+          },
+        })
+      end)
+    end,
+  },
+
   -- Debugger
   {
     "mfussenegger/nvim-dap",
