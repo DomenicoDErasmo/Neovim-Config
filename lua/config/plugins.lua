@@ -78,6 +78,7 @@ return {
   { "Mofiqul/vscode.nvim",    lazy = false,                                               priority = 1000 },
 
   -- Autocomplete
+  { "rafamadriz/friendly-snippets" },
   {
     "saghen/blink.cmp",
     build = "cargo build --release",

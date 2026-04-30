@@ -1,4 +1,5 @@
 require("blink.cmp").setup({
+  snippets = { preset = "default" },
   keymap = {
     preset = "none",
     ["<CR>"] = { "accept", "fallback" },
