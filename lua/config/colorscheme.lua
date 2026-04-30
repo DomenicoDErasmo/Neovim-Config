@@ -25,7 +25,7 @@ require("vscode").setup({
 		-- this supports the same val table as vim.api.nvim_set_hl
 		-- use colors from this colorscheme by requiring vscode.colors!
 		Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
-		ColorColumn = { bg = "LightGray" },
+		ColorColumn = { bg = "#636363" },
 		-- Fix Python kwarg names to VSCode's light blue (#9CDCFE)
 		["@variable.parameter"] = { fg = c.vscLightBlue },
 		-- Fix Python builtins (None/True/False) to VSCode's light blue (#569CD6)

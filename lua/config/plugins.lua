@@ -1,9 +1,10 @@
 return {
-  -- LSP
+  -- LSP configs (uses vim.lsp.config / vim.lsp.enable directly;
+  -- neoconf is for per-project overrides and depends on lspconfig.util at runtime)
   {
-    "neovim/nvim-lspconfig",
+    "folke/neoconf.nvim",
     event = "BufReadPre",
-    dependencies = { "folke/neoconf.nvim" },
+    dependencies = { "neovim/nvim-lspconfig" },
     config = function()
       require("neoconf").setup({})
       require("config.lsp.cpp")
@@ -100,7 +101,14 @@ return {
   },
 
   -- Terminal in Vim window
-  { "akinsho/toggleterm.nvim" },
+  {
+    "akinsho/toggleterm.nvim",
+    cmd = "ToggleTerm",
+    keys = { { "<leader>tt", "<cmd>ToggleTerm<cr>", desc = "Start toggleterm" } },
+    config = function()
+      require("config.toggleterm")
+    end,
+  },
 
   -- Autopairs
   { "windwp/nvim-autopairs",  config = function() require("nvim-autopairs").setup({}) end },
@@ -135,7 +143,7 @@ return {
   },
 
   -- Rainbow CSV
-  { "mechatroner/rainbow_csv" },
+  { "mechatroner/rainbow_csv", ft = { "csv", "tsv" } },
 
   -- Keybind popup
   { "folke/which-key.nvim",                event = "VeryLazy" },

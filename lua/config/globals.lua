@@ -54,7 +54,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		vim.opt_local.colorcolumn = "88"
 		vim.opt_local.formatoptions:remove("t")
-		vim.cmd("highlight ColorColumn guibg=#636363")
 	end,
 })
 
