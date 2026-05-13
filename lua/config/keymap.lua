@@ -43,9 +43,13 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show LSP D
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous Diagnostic" })
 
--- Full Git blame info from GitSigns
+-- Full Git blame info from GitSigns; second call focuses the popup so it's scrollable
 vim.keymap.set("n", "<leader>gb", function()
-	require("gitsigns").blame_line({ full = true })
+	local gs = require("gitsigns")
+	gs.blame_line({ full = true })
+	vim.defer_fn(function()
+		gs.blame_line({ full = true })
+	end, 50)
 end, { desc = "View full Git blame" })
 
 -- Open Oil
