@@ -6,11 +6,17 @@ return {
     event = "BufReadPre",
     dependencies = { "neovim/nvim-lspconfig" },
     config = function()
-      require("neoconf").setup({})
+      require("neoconf").setup({
+        local_settings = { ".neoconf.json", ".vim/neoconf.json" },
+      })
+      -- Workaround for neoconf upstream bug (commands.lua:107 concatenates
+      -- local_settings as a string). local_patterns is already populated from
+      -- the table above; this only affects the "create new file" fallback in
+      -- :Neoconf, which expects a single string.
+      require("neoconf.config").options.local_settings = ".neoconf.json"
       require("config.lsp.cpp")
       require("config.lsp.lua")
       require("config.lsp.python")
-      require("config.lsp.yaml")
       require("config.lsp.proto")
     end,
   },
