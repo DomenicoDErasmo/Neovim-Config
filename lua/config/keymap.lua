@@ -52,6 +52,30 @@ vim.keymap.set("n", "<leader>gb", function()
 	end, 50)
 end, { desc = "View full Git blame" })
 
+-- Diff of the commit that last touched the current line
+vim.keymap.set("n", "<leader>gd", function()
+	local file = vim.fn.expand("%:p")
+	if file == "" or vim.fn.filereadable(file) == 0 then
+		vim.notify("No file for current buffer", vim.log.levels.WARN)
+		return
+	end
+	local line = vim.fn.line(".")
+	local out = vim.fn.systemlist({
+		"git", "-C", vim.fn.fnamemodify(file, ":h"),
+		"blame", "-L", line .. "," .. line, "--porcelain", file,
+	})
+	if vim.v.shell_error ~= 0 or #out == 0 then
+		vim.notify("git blame failed", vim.log.levels.ERROR)
+		return
+	end
+	local sha = out[1]:match("^(%x+)")
+	if not sha or sha:match("^0+$") then
+		vim.notify("Line is uncommitted", vim.log.levels.INFO)
+		return
+	end
+	vim.cmd("DiffviewOpen " .. sha .. "^!")
+end, { desc = "Diff commit that changed current line" })
+
 -- Open Oil
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<cr>", { desc = "Open file browser" })
 

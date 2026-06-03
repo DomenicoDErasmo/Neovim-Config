@@ -35,17 +35,66 @@ local function ruff_args_for_buf()
   return vim.list_extend({ "check" }, args)
 end
 
+-- ty's LSP server (v0.0.x) doesn't publish diagnostics, only navigation.
+-- Run `ty check` as a linter to surface unresolved-import and other errors.
+local ty_severities = {
+  error = vim.diagnostic.severity.ERROR,
+  warning = vim.diagnostic.severity.WARN,
+  info = vim.diagnostic.severity.INFO,
+}
+
+lint.linters["ty"] = {
+  cmd = paths.ty,
+  stdin = false,
+  stream = "stdout",
+  ignore_exitcode = true,
+  args = { "check", "--output-format", "concise" },
+  -- append the buffer's path so ty checks the file we're editing
+  parser = require("lint.parser").from_pattern(
+    "([^:]+):(%d+):(%d+): (%a+)%[([%w-]+)%] (.*)",
+    { "file", "lnum", "col", "severity", "code", "message" },
+    ty_severities,
+    { ["source"] = "ty" }
+  ),
+}
+
+-- locate the directory containing the nearest ty.toml so ty picks up
+-- the right config (rDEV has separate configs in / and otl/)
+local function ty_cwd_for_buf()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname == "" then
+    return nil
+  end
+  local dir = vim.fn.fnamemodify(bufname, ":h")
+  while dir ~= "/" do
+    if vim.fn.filereadable(dir .. "/ty.toml") == 1 then
+      return dir
+    end
+    dir = vim.fn.fnamemodify(dir, ":h")
+  end
+  return nil
+end
+
 lint.linters_by_ft = {
   markdown = { "markdownlint-cli2" },
   python = { "ruff" },
 }
 
 vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
-  callback = function()
+  callback = function(args)
     local ft = vim.bo.filetype
     if ft == "python" then
       lint.linters["ruff"].args = ruff_args_for_buf()
-      lint.try_lint()
+      lint.try_lint("ruff")
+      -- ty is slower (~2s/file) so skip it on InsertLeave
+      if args.event ~= "InsertLeave" then
+        local cwd = ty_cwd_for_buf()
+        if cwd then
+          lint.linters["ty"].cwd = cwd
+          lint.linters["ty"].args = { "check", "--output-format", "concise", vim.api.nvim_buf_get_name(0) }
+          lint.try_lint("ty")
+        end
+      end
     elseif ft == "markdown" then
       lint.try_lint()
     end

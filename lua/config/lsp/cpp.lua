@@ -1,18 +1,13 @@
-local capabilities = require("blink.cmp").get_lsp_capabilities()
-capabilities.offsetEncoding = { "utf-16" }
+clangd = "/atl/make/localcoding/bin/clangd"
 
-vim.lsp.config("clangd", {
-	capabilities = capabilities,
-	cmd = {
-		"clangd",
-		"--background-index",
-		"--clang-tidy",
-		"--header-insertion=iwyu",
-		"--completion-style=detailed",
-		"--function-arg-placeholders=true",
-	},
-	filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
-	root_markers = { "compile_commands.json", ".clangd", ".clang-format", ".clang-tidy", ".git" },
+vim.lsp.config("dev-clangd", {
+  cmd = {
+    clangd,
+  },
+  filetypes = { "c", "cpp" },
+  root_markers = { ".clangd", ".git" },
 })
 
-vim.lsp.enable("clangd")
+if vim.fn.executable(clangd) and vim.fn.filereadable(".clangd") then
+  vim.lsp.enable('dev-clangd')
+end

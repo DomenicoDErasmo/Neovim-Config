@@ -95,8 +95,9 @@ return {
     "stevearc/oil.nvim",
     config = function()
       require("oil").setup({
-        win_options = { signcolumn = "yes:2" },
+        win_options = { signcolumn = "yes:3" },
       })
+      require("config.oil_lsp_diag")
     end,
   },
 
