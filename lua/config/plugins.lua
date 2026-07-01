@@ -207,9 +207,12 @@ return {
     },
     config = function()
       vim.schedule(function()
+        -- Point $NVIM_VENV_DIR at a directory of shared venvs to add a custom
+        -- search; otherwise fall back to venv-selector's default searches.
+        local venv_dir = os.getenv("NVIM_VENV_DIR")
         require("venv-selector").setup({
           options = {
-            enable_default_searches = false,
+            enable_default_searches = venv_dir == nil,
             on_venv_activate_callback = function()
               local python = require("venv-selector").python()
               if python then
@@ -217,9 +220,9 @@ return {
               end
             end,
           },
-          search = {
-            hrt = { command = "$FD '/bin/python$' /usr/local/venvs --full-path --color never" },
-          },
+          search = venv_dir and {
+            shared = { command = "$FD '/bin/python$' " .. venv_dir .. " --full-path --color never" },
+          } or nil,
         })
       end)
     end,

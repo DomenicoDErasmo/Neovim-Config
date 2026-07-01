@@ -3,7 +3,12 @@ local paths = require("config.paths")
 
 local home = os.getenv("HOME")
 
-lint.linters["markdownlint-cli2"].cmd = home .. "/node_modules/.bin/markdownlint-cli2"
+-- Prefer markdownlint-cli2 on PATH; fall back to a local npm install in $HOME.
+local markdownlint = vim.fn.exepath("markdownlint-cli2")
+if markdownlint == "" then
+  markdownlint = home .. "/node_modules/.bin/markdownlint-cli2"
+end
+lint.linters["markdownlint-cli2"].cmd = markdownlint
 
 lint.linters["ruff"].cmd = paths.ruff
 

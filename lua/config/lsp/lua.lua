@@ -1,7 +1,6 @@
-local lua_ls_cmd = vim.fn.exepath("lua-language-server")
-if lua_ls_cmd == "" then
-	lua_ls_cmd = vim.fn.expand("~/opt/lua-language-server/bin/lua-language-server")
-end
+-- Path comes from $NVIM_LUA_LS (set in ~/.config/shell/shell_settings.sh);
+-- falls back to a PATH lookup if the env var is unset.
+local lua_ls_cmd = os.getenv("NVIM_LUA_LS") or vim.fn.exepath("lua-language-server")
 
 vim.lsp.config("lua_ls", {
 	cmd = { lua_ls_cmd },

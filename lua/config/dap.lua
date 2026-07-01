@@ -1,8 +1,9 @@
 local dap = require("dap")
 local dapui = require("dapui")
 
--- debugpy must be installed in this venv: pip install debugpy
-require("dap-python").setup("/usr/local/venvs/opsvenv2/bin/python")
+-- Python interpreter that has debugpy installed (pip install debugpy).
+-- Set $NVIM_DEBUGPY_PYTHON to a specific venv; falls back to python3 on PATH.
+require("dap-python").setup(os.getenv("NVIM_DEBUGPY_PYTHON") or "python3")
 
 dapui.setup()
 require("nvim-dap-virtual-text").setup()
