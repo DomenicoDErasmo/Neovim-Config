@@ -84,6 +84,16 @@ return {
     end,
   },
 
+  -- Sticky header showing the enclosing function/class while scrolling
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "BufReadPost",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesitter-context").setup({ max_lines = 3 })
+    end,
+  },
+
   -- Colorscheme
   { "Mofiqul/vscode.nvim",         lazy = false, priority = 1000 },
 

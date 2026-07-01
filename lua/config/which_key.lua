@@ -9,4 +9,5 @@ require("which-key").add({
   { "<leader>t", group = "terminal/tab" },
   { "<leader>r", group = "rename" },
   { "<leader>d", group = "debug" },
+  { "<leader>u", group = "ui/toggle" },
 })

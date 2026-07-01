@@ -17,6 +17,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Code actions
 		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code action" })
 
+		-- Inlay hints: enable on attach when the server supports them, toggle with <leader>uh
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client and client:supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true, { bufnr = buf })
+			vim.keymap.set("n", "<leader>uh", function()
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { bufnr = buf })
+			end, { buffer = buf, desc = "Toggle inlay hints" })
+		end
+
 		-- Highlight references to symbol under cursor
 		local group = vim.api.nvim_create_augroup("LspDocumentHighlight_" .. buf, { clear = true })
 		vim.api.nvim_create_autocmd("CursorHold", {
@@ -107,3 +116,20 @@ end, { desc = "Find and replace selection (grug-far)" })
 
 -- Undotree toggle
 vim.keymap.set("n", "<leader><F5>", vim.cmd.UndotreeToggle, { desc = "Toggle Undotree" })
+
+-- Clear search highlight
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
+
+-- Window navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
+-- Move selected lines up/down, re-indenting to the new context
+vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
+
+-- Re-indent in visual mode without losing the selection
+vim.keymap.set("v", "<", "<gv", { desc = "Dedent selection" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent selection" })
