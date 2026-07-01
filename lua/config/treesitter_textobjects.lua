@@ -1,6 +1,6 @@
 -- Make ]m/[m etc. repeatable with ; and ,
 -- Also makes f/F/t/T work through the same repeatable mechanism
-local repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+local repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 vim.keymap.set({ "n", "x", "o" }, ";", repeat_move.repeat_last_move, { desc = "Repeat last move" })
 vim.keymap.set({ "n", "x", "o" }, ",", repeat_move.repeat_last_move_opposite, { desc = "Repeat last move (opposite)" })
 vim.keymap.set({ "n", "x", "o" }, "f", repeat_move.builtin_f_expr, { expr = true })

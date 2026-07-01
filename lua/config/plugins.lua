@@ -65,6 +65,8 @@ return {
   -- Treesitter - Syntax parser
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+    build = ":TSUpdate",
     event = "BufReadPost",
     config = function()
       require("config.treesitter")
@@ -74,6 +76,7 @@ return {
   -- Treesitter text objects (select/move/swap by function, class, argument, block)
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "master",
     event = "BufReadPost",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
@@ -82,7 +85,7 @@ return {
   },
 
   -- Colorscheme
-  { "Mofiqul/vscode.nvim",    lazy = false,                                               priority = 1000 },
+  { "Mofiqul/vscode.nvim",         lazy = false, priority = 1000 },
 
   -- Autocomplete
   { "rafamadriz/friendly-snippets" },
@@ -118,7 +121,7 @@ return {
   },
 
   -- Autopairs
-  { "windwp/nvim-autopairs",  config = function() require("nvim-autopairs").setup({}) end },
+  { "windwp/nvim-autopairs",               config = function() require("nvim-autopairs").setup({}) end },
 
   -- Rainbow delimiters
   -- Pinned because errors throw when I insert certain text
@@ -150,7 +153,7 @@ return {
   },
 
   -- Rainbow CSV
-  { "mechatroner/rainbow_csv", ft = { "csv", "tsv" } },
+  { "mechatroner/rainbow_csv",             ft = { "csv", "tsv" } },
 
   -- Keybind popup
   { "folke/which-key.nvim",                event = "VeryLazy" },
