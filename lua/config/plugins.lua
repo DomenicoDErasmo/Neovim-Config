@@ -99,10 +99,13 @@ return {
 
   -- Autocomplete
   { "rafamadriz/friendly-snippets" },
+  { "saghen/blink.compat", version = "*", lazy = true, opts = {} },
+  { "rcarriga/cmp-dap" },
   {
     "saghen/blink.cmp",
     build = "cargo build --release",
     event = "InsertEnter",
+    dependencies = { "saghen/blink.compat", "rcarriga/cmp-dap" },
     config = function()
       require("config.blink")
     end,

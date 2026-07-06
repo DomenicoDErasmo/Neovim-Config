@@ -5,7 +5,28 @@ local dapui = require("dapui")
 -- Set $NVIM_DEBUGPY_PYTHON to a specific venv; falls back to python3 on PATH.
 require("dap-python").setup(os.getenv("NVIM_DEBUGPY_PYTHON") or "python3")
 
-dapui.setup()
+dapui.setup({
+	layouts = {
+		{
+			elements = {
+				{ id = "scopes",      size = 0.35 },
+				{ id = "watches",     size = 0.25 },
+				{ id = "stacks",      size = 0.25 },
+				{ id = "breakpoints", size = 0.15 },
+			},
+			size = 50,          -- sidebar width in columns (default 40)
+			position = "left",
+		},
+		{
+			elements = {
+				{ id = "repl",    size = 0.6 },   -- give the repl more room than console
+				{ id = "console", size = 0.4 },
+			},
+			size = 15,          -- bottom tray height in rows (default 10)
+			position = "bottom",
+		},
+	},
+})
 require("nvim-dap-virtual-text").setup()
 
 -- VSCode-style gutter icons
@@ -36,6 +57,7 @@ map("n", "<leader>da", function()
 		request = "launch",
 		name = "Launch with args",
 		program = "${file}",
+		console = "integratedTerminal",
 		args = function()
 			return vim.split(vim.fn.input("Args: "), " ", { trimempty = true })
 		end,
@@ -51,5 +73,9 @@ map("n", "<leader>dO", dap.step_out, { desc = "Step out" })
 map("n", "<leader>dt", dap.terminate, { desc = "Terminate" })
 map("n", "<leader>du", dapui.toggle, { desc = "Toggle DAP UI" })
 map("n", "<leader>dr", dap.repl.open, { desc = "Open REPL" })
+map("n", "<leader>d=", "<cmd>resize +5<cr>",          { desc = "DAP window taller" })
+map("n", "<leader>d-", "<cmd>resize -5<cr>",          { desc = "DAP window shorter" })
+map("n", "<leader>d>", "<cmd>vertical resize +5<cr>", { desc = "DAP window wider" })
+map("n", "<leader>d<", "<cmd>vertical resize -5<cr>", { desc = "DAP window narrower" })
 map("n", "<leader>dm", function() require("dap-python").test_method() end, { desc = "Debug test method" })
 map("n", "<leader>dM", function() require("dap-python").test_class() end, { desc = "Debug test class" })
