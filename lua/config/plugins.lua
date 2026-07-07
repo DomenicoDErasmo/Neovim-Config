@@ -18,6 +18,7 @@ return {
       require("config.lsp.lua")
       require("config.lsp.python")
       require("config.lsp.proto")
+      require("config.lsp.rust")
     end,
   },
 
