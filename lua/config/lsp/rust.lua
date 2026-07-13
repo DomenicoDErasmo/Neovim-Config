@@ -1,5 +1,5 @@
 require("config.lsp").setup("rust_analyzer", {
-	cmd = { vim.fn.exepath("rust-analyzer") },
+	cmd = { require("config.paths").rust_analyzer },
 	filetypes = { "rust" },
 	root_markers = { "Cargo.toml", "rust-project.json" },
 	settings = {

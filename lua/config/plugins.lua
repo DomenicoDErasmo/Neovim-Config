@@ -1,3 +1,7 @@
+local function cfg(name)
+  return function() require("config." .. name) end
+end
+
 return {
   -- LSP configs (uses vim.lsp.config / vim.lsp.enable directly;
   -- neoconf is for per-project overrides and depends on lspconfig.util at runtime)
@@ -29,24 +33,18 @@ return {
   {
     "stevearc/conform.nvim",
     event = "BufWritePre",
-    config = function()
-      require("config.conform")
-    end,
+    config = cfg("conform"),
   },
   {
     "mfussenegger/nvim-lint",
     ft = { "markdown", "python" },
-    config = function()
-      require("config.nvim_lint")
-    end,
+    config = cfg("nvim_lint"),
   },
 
   -- Fuzzy file search
   {
     "nvim-telescope/telescope.nvim",
-    config = function()
-      require("config.telescope")
-    end,
+    config = cfg("telescope"),
   },
   { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
@@ -57,27 +55,21 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPost",
-    config = function()
-      require("config.gitsigns")
-    end,
+    config = cfg("gitsigns"),
   },
 
   -- Customizable status bar
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    config = function()
-      require("config.lualine")
-    end,
+    config = cfg("lualine"),
   },
 
   -- Highlight TODO comments
   {
     "folke/todo-comments.nvim",
     event = "BufReadPost",
-    config = function()
-      require("config.todo_comments")
-    end,
+    config = cfg("todo_comments"),
   },
 
   -- Treesitter - Syntax parser
@@ -86,9 +78,7 @@ return {
     branch = "master",
     build = ":TSUpdate",
     event = "BufReadPost",
-    config = function()
-      require("config.treesitter")
-    end,
+    config = cfg("treesitter"),
   },
 
   -- Treesitter text objects (select/move/swap by function, class, argument, block)
@@ -97,9 +87,7 @@ return {
     branch = "master",
     event = "BufReadPost",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      require("config.treesitter_textobjects")
-    end,
+    config = cfg("treesitter_textobjects"),
   },
 
   -- Sticky header showing the enclosing function/class while scrolling
@@ -117,9 +105,7 @@ return {
     "Mofiqul/vscode.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
-      require("config.colorscheme")
-    end,
+    config = cfg("colorscheme"),
   },
 
   -- Autocomplete
@@ -131,9 +117,7 @@ return {
     build = "cargo build --release",
     event = "InsertEnter",
     dependencies = { "saghen/blink.compat", "rcarriga/cmp-dap" },
-    config = function()
-      require("config.blink")
-    end,
+    config = cfg("blink"),
     version = "1.*",
   },
 
@@ -153,9 +137,7 @@ return {
     "akinsho/toggleterm.nvim",
     cmd = "ToggleTerm",
     keys = { { "<leader>tt", "<cmd>ToggleTerm<cr>", desc = "Start toggleterm" } },
-    config = function()
-      require("config.toggleterm")
-    end,
+    config = cfg("toggleterm"),
   },
 
   -- Autopairs
@@ -167,27 +149,21 @@ return {
   {
     "HiPhish/rainbow-delimiters.nvim",
     event = "BufReadPost",
-    config = function()
-      require("config.rainbow_delimiters")
-    end
+    config = cfg("rainbow_delimiters"),
   },
 
   -- Obsidian
   {
     "obsidian-nvim/obsidian.nvim",
     ft = "markdown",
-    config = function()
-      require("config.obsidian")
-    end,
+    config = cfg("obsidian"),
   },
 
   -- Markdown rendering
   {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown" },
-    config = function()
-      require("config.render_markdown")
-    end,
+    config = cfg("render_markdown"),
   },
 
   -- Rainbow CSV
@@ -197,9 +173,7 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    config = function()
-      require("config.which_key")
-    end,
+    config = cfg("which_key"),
   },
 
   -- Indentation guide
@@ -216,13 +190,11 @@ return {
     "kevinhwang91/nvim-ufo",
     event = "BufReadPost",
     dependencies = { "kevinhwang91/promise-async" },
-    config = function()
-      require("config.ufo")
-    end,
+    config = cfg("ufo"),
   },
 
   -- View all LSP errors at once
-  { "folke/trouble.nvim",                  config = function() require("config.trouble") end },
+  { "folke/trouble.nvim",                  config = cfg("trouble") },
 
   -- Visualize undo history
   { "mbbill/undotree",                     cmd = "UndotreeToggle" },
@@ -231,9 +203,7 @@ return {
   {
     "rcarriga/nvim-notify",
     lazy = false,
-    config = function()
-      require("config.notify")
-    end,
+    config = cfg("notify"),
   },
 
   -- Git status in oil buffers
@@ -284,9 +254,7 @@ return {
       "mfussenegger/nvim-dap-python",
       "theHamsta/nvim-dap-virtual-text",
     },
-    config = function()
-      require("config.dap")
-    end,
+    config = cfg("dap"),
   },
 
   -- Find and replace with ripgrep
