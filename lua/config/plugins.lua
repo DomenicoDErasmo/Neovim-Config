@@ -42,7 +42,12 @@ return {
   },
 
   -- Fuzzy file search
-  { "nvim-telescope/telescope.nvim" },
+  {
+    "nvim-telescope/telescope.nvim",
+    config = function()
+      require("config.telescope")
+    end,
+  },
   { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
   -- Icons
@@ -58,10 +63,22 @@ return {
   },
 
   -- Customizable status bar
-  { "nvim-lualine/lualine.nvim" },
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("config.lualine")
+    end,
+  },
 
   -- Highlight TODO comments
-  { "folke/todo-comments.nvim" },
+  {
+    "folke/todo-comments.nvim",
+    event = "BufReadPost",
+    config = function()
+      require("config.todo_comments")
+    end,
+  },
 
   -- Treesitter - Syntax parser
   {
@@ -96,7 +113,14 @@ return {
   },
 
   -- Colorscheme
-  { "Mofiqul/vscode.nvim",         lazy = false, priority = 1000 },
+  {
+    "Mofiqul/vscode.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("config.colorscheme")
+    end,
+  },
 
   -- Autocomplete
   { "rafamadriz/friendly-snippets" },
@@ -170,7 +194,13 @@ return {
   { "mechatroner/rainbow_csv",             ft = { "csv", "tsv" } },
 
   -- Keybind popup
-  { "folke/which-key.nvim",                event = "VeryLazy" },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("config.which_key")
+    end,
+  },
 
   -- Indentation guide
   { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end },
@@ -182,7 +212,14 @@ return {
   { "NeogitOrg/neogit",                    cmd = { "Neogit" } },
 
   -- Better fold
-  { "kevinhwang91/nvim-ufo",               dependencies = { "kevinhwang91/promise-async" } },
+  {
+    "kevinhwang91/nvim-ufo",
+    event = "BufReadPost",
+    dependencies = { "kevinhwang91/promise-async" },
+    config = function()
+      require("config.ufo")
+    end,
+  },
 
   -- View all LSP errors at once
   { "folke/trouble.nvim",                  config = function() require("config.trouble") end },
@@ -191,7 +228,13 @@ return {
   { "mbbill/undotree",                     cmd = "UndotreeToggle" },
 
   -- LSP messages
-  { "rcarriga/nvim-notify", },
+  {
+    "rcarriga/nvim-notify",
+    lazy = false,
+    config = function()
+      require("config.notify")
+    end,
+  },
 
   -- Git status in oil buffers
   {

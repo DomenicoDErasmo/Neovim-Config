@@ -1,6 +1,4 @@
--- Path comes from $NVIM_LUA_LS (set in ~/.config/shell/shell_settings.sh);
--- falls back to a PATH lookup if the env var is unset.
-local lua_ls_cmd = os.getenv("NVIM_LUA_LS") or vim.fn.exepath("lua-language-server")
+local lua_ls_cmd = require("config.paths").lua_ls
 
 require("config.lsp").setup("lua_ls", {
 	cmd = { lua_ls_cmd },
