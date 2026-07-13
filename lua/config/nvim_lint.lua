@@ -12,24 +12,26 @@ lint.linters["markdownlint-cli2"].cmd = markdownlint
 
 lint.linters["ruff"].cmd = paths.ruff
 
--- we have different configs in OTL and DEV
-local function ruff_args_for_buf()
-  local bufname = vim.api.nvim_buf_get_name(0)
-  local dir = vim.fn.fnamemodify(bufname, ":h")
-  local config, config_dir = nil, nil
+-- Walk up from `start`'s directory looking for any of `names`.
+-- Returns the config's path and its containing directory, or nil.
+local function find_upward(names, start)
+  if start == "" then
+    return nil
+  end
+  local dir = vim.fn.fnamemodify(start, ":h")
   while dir ~= "/" do
-    for _, name in ipairs({ "ruff.toml", ".ruff.toml" }) do
+    for _, name in ipairs(names) do
       if vim.fn.filereadable(dir .. "/" .. name) == 1 then
-        config = dir .. "/" .. name
-        config_dir = dir
-        break
+        return dir .. "/" .. name, dir
       end
-    end
-    if config then
-      break
     end
     dir = vim.fn.fnamemodify(dir, ":h")
   end
+end
+
+-- we have different configs in OTL and DEV
+local function ruff_args_for_buf()
+  local config, config_dir = find_upward({ "ruff.toml", ".ruff.toml" }, vim.api.nvim_buf_get_name(0))
   -- ruff resolves `src = ["."]` against cwd, so chdir to the config's
   -- directory before invoking, otherwise first-party detection breaks
   lint.linters["ruff"].cwd = config_dir
@@ -48,12 +50,14 @@ local ty_severities = {
   info = vim.diagnostic.severity.INFO,
 }
 
+local ty_base_args = { "check", "--output-format", "concise" }
+
 lint.linters["ty"] = {
   cmd = paths.ty,
   stdin = false,
   stream = "stdout",
   ignore_exitcode = true,
-  args = { "check", "--output-format", "concise" },
+  args = ty_base_args,
   -- append the buffer's path so ty checks the file we're editing
   parser = require("lint.parser").from_pattern(
     "([^:]+):(%d+):(%d+): (%a+)%[([%w-]+)%] (.*)",
@@ -66,18 +70,8 @@ lint.linters["ty"] = {
 -- locate the directory containing the nearest ty.toml so ty picks up
 -- the right config (rDEV has separate configs in / and otl/)
 local function ty_cwd_for_buf()
-  local bufname = vim.api.nvim_buf_get_name(0)
-  if bufname == "" then
-    return nil
-  end
-  local dir = vim.fn.fnamemodify(bufname, ":h")
-  while dir ~= "/" do
-    if vim.fn.filereadable(dir .. "/ty.toml") == 1 then
-      return dir
-    end
-    dir = vim.fn.fnamemodify(dir, ":h")
-  end
-  return nil
+  local _, config_dir = find_upward({ "ty.toml" }, vim.api.nvim_buf_get_name(0))
+  return config_dir
 end
 
 lint.linters_by_ft = {
@@ -96,7 +90,8 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
         local cwd = ty_cwd_for_buf()
         if cwd then
           lint.linters["ty"].cwd = cwd
-          lint.linters["ty"].args = { "check", "--output-format", "concise", vim.api.nvim_buf_get_name(0) }
+          -- copy so we don't mutate the shared base list
+          lint.linters["ty"].args = vim.list_extend(vim.deepcopy(ty_base_args), { vim.api.nvim_buf_get_name(0) })
           lint.try_lint("ty")
         end
       end

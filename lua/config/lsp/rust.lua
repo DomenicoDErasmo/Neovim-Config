@@ -1,4 +1,4 @@
-vim.lsp.config["rust_analyzer"] = {
+require("config.lsp").setup("rust_analyzer", {
 	cmd = { vim.fn.exepath("rust-analyzer") },
 	filetypes = { "rust" },
 	root_markers = { "Cargo.toml", "rust-project.json" },
@@ -12,11 +12,4 @@ vim.lsp.config["rust_analyzer"] = {
 			},
 		},
 	},
-}
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "rust",
-	callback = function()
-		vim.lsp.start(vim.lsp.config["rust_analyzer"])
-	end,
 })
