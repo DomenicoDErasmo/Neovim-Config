@@ -15,6 +15,13 @@ local function find_files(hidden)
   end
 end
 
+-- Call a telescope.builtin picker by name, with optional static opts.
+local function builtin(name, opts)
+  return function()
+    require("telescope.builtin")[name](opts)
+  end
+end
+
 return {
   -- LSP configs (uses vim.lsp.config / vim.lsp.enable directly;
   -- neoconf is for per-project overrides and depends on lspconfig.util at runtime)
@@ -74,16 +81,12 @@ return {
       },
       {
         "<leader>fg",
-        function()
-          require("telescope.builtin").live_grep()
-        end,
+        builtin("live_grep"),
         desc = "Telescope live grep",
       },
       {
         "<leader>fG",
-        function()
-          require("telescope.builtin").live_grep({ additional_args = { "--fixed-strings" } })
-        end,
+        builtin("live_grep", { additional_args = { "--fixed-strings" } }),
         desc = "Telescope live grep (exact)",
       },
       {
@@ -101,37 +104,27 @@ return {
       },
       {
         "<leader>fo",
-        function()
-          require("telescope.builtin").oldfiles()
-        end,
+        builtin("oldfiles"),
         desc = "Telescope recent files",
       },
       {
         "<leader>fb",
-        function()
-          require("telescope.builtin").buffers()
-        end,
+        builtin("buffers"),
         desc = "Telescope buffers",
       },
       {
         "<leader>fh",
-        function()
-          require("telescope.builtin").help_tags()
-        end,
+        builtin("help_tags"),
         desc = "Telescope help tags",
       },
       {
         "<leader>fs",
-        function()
-          require("telescope.builtin").lsp_document_symbols()
-        end,
+        builtin("lsp_document_symbols"),
         desc = "Document symbols",
       },
       {
         "<leader>fS",
-        function()
-          require("telescope.builtin").lsp_dynamic_workspace_symbols()
-        end,
+        builtin("lsp_dynamic_workspace_symbols"),
         desc = "Workspace symbols",
       },
     },
