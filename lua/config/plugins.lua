@@ -4,6 +4,17 @@ local function cfg(name)
   end
 end
 
+-- Telescope find_files, optionally including hidden files. Always skips .git.
+local function find_files(hidden)
+  return function()
+    local find_command = { "rg", "--files", "--glob", "!.git/*" }
+    if hidden then
+      table.insert(find_command, "--hidden")
+    end
+    require("telescope.builtin").find_files({ find_command = find_command })
+  end
+end
+
 return {
   -- LSP configs (uses vim.lsp.config / vim.lsp.enable directly;
   -- neoconf is for per-project overrides and depends on lspconfig.util at runtime)
@@ -46,12 +57,89 @@ return {
   -- Fuzzy file search
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    cmd = "Telescope",
+    keys = {
+      {
+        "<leader>fa",
+        find_files(false),
+        desc = "Telescope find files (exclude hidden files)",
+      },
+      {
+        "<leader>ff",
+        find_files(true),
+        desc = "Telescope find files",
+      },
+      {
+        "<leader>fg",
+        function()
+          require("telescope.builtin").live_grep()
+        end,
+        desc = "Telescope live grep",
+      },
+      {
+        "<leader>fG",
+        function()
+          require("telescope.builtin").live_grep({ additional_args = { "--fixed-strings" } })
+        end,
+        desc = "Telescope live grep (exact)",
+      },
+      {
+        "<leader>ft",
+        function()
+          require("telescope.builtin").live_grep({
+            prompt_title = "Live Grep (filetype)",
+            additional_args = function()
+              local glob = vim.fn.input("Glob filter: ")
+              return glob ~= "" and { "--glob", glob } or {}
+            end,
+          })
+        end,
+        desc = "Telescope live grep (filetype)",
+      },
+      {
+        "<leader>fo",
+        function()
+          require("telescope.builtin").oldfiles()
+        end,
+        desc = "Telescope recent files",
+      },
+      {
+        "<leader>fb",
+        function()
+          require("telescope.builtin").buffers()
+        end,
+        desc = "Telescope buffers",
+      },
+      {
+        "<leader>fh",
+        function()
+          require("telescope.builtin").help_tags()
+        end,
+        desc = "Telescope help tags",
+      },
+      {
+        "<leader>fs",
+        function()
+          require("telescope.builtin").lsp_document_symbols()
+        end,
+        desc = "Document symbols",
+      },
+      {
+        "<leader>fS",
+        function()
+          require("telescope.builtin").lsp_dynamic_workspace_symbols()
+        end,
+        desc = "Workspace symbols",
+      },
+    },
     config = cfg("telescope"),
   },
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
   -- Icons
-  { "nvim-tree/nvim-web-devicons" },
+  { "nvim-tree/nvim-web-devicons", lazy = true },
 
   -- Git status for lines changed
   {
@@ -111,7 +199,6 @@ return {
   },
 
   -- Autocomplete
-  { "rafamadriz/friendly-snippets" },
   {
     "saghen/blink.cmp",
     build = "cargo build --release",
@@ -119,6 +206,7 @@ return {
     dependencies = {
       { "saghen/blink.compat", version = "*", opts = {} },
       "rcarriga/cmp-dap",
+      "rafamadriz/friendly-snippets",
     },
     config = cfg("blink"),
     version = "1.*",
@@ -127,10 +215,13 @@ return {
   -- File browser
   {
     "stevearc/oil.nvim",
+    lazy = false,
+    dependencies = { "refractalize/oil-git-status.nvim" },
     config = function()
       require("oil").setup({
         win_options = { signcolumn = "yes:3" },
       })
+      require("oil-git-status").setup()
       require("config.oil_lsp_diag")
     end,
   },
@@ -146,6 +237,7 @@ return {
   -- Autopairs
   {
     "windwp/nvim-autopairs",
+    event = "InsertEnter",
     config = function()
       require("nvim-autopairs").setup({})
     end,
@@ -187,6 +279,7 @@ return {
   -- Indentation guide
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPost",
     config = function()
       require("ibl").setup()
     end,
@@ -207,7 +300,7 @@ return {
   },
 
   -- View all LSP errors at once
-  { "folke/trouble.nvim", config = cfg("trouble") },
+  { "folke/trouble.nvim", cmd = "Trouble", config = cfg("trouble") },
 
   -- Visualize undo history
   { "mbbill/undotree", cmd = "UndotreeToggle" },
@@ -217,14 +310,6 @@ return {
     "rcarriga/nvim-notify",
     lazy = false,
     config = cfg("notify"),
-  },
-
-  -- Git status in oil buffers
-  {
-    "refractalize/oil-git-status.nvim",
-    config = function()
-      require("oil-git-status").setup()
-    end,
   },
 
   -- Python venv selector

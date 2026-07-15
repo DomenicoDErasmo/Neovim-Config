@@ -10,4 +10,5 @@ require("which-key").add({
   { "<leader>r", group = "rename" },
   { "<leader>d", group = "debug" },
   { "<leader>u", group = "ui/toggle" },
+  { "<leader>p", group = "python" },
 })
