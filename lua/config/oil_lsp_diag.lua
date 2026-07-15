@@ -2,31 +2,35 @@
 -- Only inspects already-loaded buffers — no filesystem walk, no LSP queries
 -- triggered by Oil itself. Files you haven't opened won't get signs.
 
-local M = {}
-
 local ns = vim.api.nvim_create_namespace("oil_lsp_diag")
 
 local sev_hl = {
   [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-  [vim.diagnostic.severity.WARN]  = "DiagnosticSignWarn",
-  [vim.diagnostic.severity.INFO]  = "DiagnosticSignInfo",
-  [vim.diagnostic.severity.HINT]  = "DiagnosticSignHint",
+  [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+  [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+  [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
 }
 local sev_text = {
   [vim.diagnostic.severity.ERROR] = "E",
-  [vim.diagnostic.severity.WARN]  = "W",
-  [vim.diagnostic.severity.INFO]  = "I",
-  [vim.diagnostic.severity.HINT]  = "H",
+  [vim.diagnostic.severity.WARN] = "W",
+  [vim.diagnostic.severity.INFO] = "I",
+  [vim.diagnostic.severity.HINT] = "H",
 }
 
 local function refresh(bufnr)
-  if not vim.api.nvim_buf_is_valid(bufnr) then return end
-  if vim.bo[bufnr].filetype ~= "oil" then return end
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    return
+  end
+  if vim.bo[bufnr].filetype ~= "oil" then
+    return
+  end
   vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
 
   local oil = require("oil")
   local dir = oil.get_current_dir(bufnr)
-  if not dir then return end
+  if not dir then
+    return
+  end
 
   -- Worst diagnostic per direct-child filename, from loaded buffers only.
   local worst = {}
@@ -45,7 +49,9 @@ local function refresh(bufnr)
       end
     end
   end
-  if next(worst) == nil then return end
+  if next(worst) == nil then
+    return
+  end
 
   for lnum = 1, vim.api.nvim_buf_line_count(bufnr) do
     local entry = oil.get_entry_on_line(bufnr, lnum)
@@ -66,7 +72,9 @@ local group = vim.api.nvim_create_augroup("OilLspDiag", { clear = true })
 vim.api.nvim_create_autocmd("User", {
   group = group,
   pattern = "OilEnter",
-  callback = function(args) refresh(args.buf) end,
+  callback = function(args)
+    refresh(args.buf)
+  end,
 })
 
 -- Refresh when diagnostics change in any buffer.
@@ -74,9 +82,9 @@ vim.api.nvim_create_autocmd("DiagnosticChanged", {
   group = group,
   callback = function()
     for _, b in ipairs(vim.api.nvim_list_bufs()) do
-      if vim.bo[b].filetype == "oil" then refresh(b) end
+      if vim.bo[b].filetype == "oil" then
+        refresh(b)
+      end
     end
   end,
 })
-
-return M

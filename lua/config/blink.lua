@@ -31,5 +31,5 @@ require("blink.cmp").setup({
       dap = { name = "dap", module = "blink.compat.source" },
     },
   },
-  signature = { enabled = true, window = { show_documentation = true, } },
+  signature = { enabled = true, window = { show_documentation = true } },
 })

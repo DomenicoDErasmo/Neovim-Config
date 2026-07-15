@@ -1,5 +1,7 @@
 local function cfg(name)
-  return function() require("config." .. name) end
+  return function()
+    require("config." .. name)
+  end
 end
 
 return {
@@ -27,7 +29,7 @@ return {
   },
 
   -- Async helpers (required by telescope, neogit, obsidian)
-  { "nvim-lua/plenary.nvim",                    lazy = true },
+  { "nvim-lua/plenary.nvim", lazy = true },
 
   -- Formatting and Linting
   {
@@ -110,13 +112,14 @@ return {
 
   -- Autocomplete
   { "rafamadriz/friendly-snippets" },
-  { "saghen/blink.compat", version = "*", lazy = true, opts = {} },
-  { "rcarriga/cmp-dap" },
   {
     "saghen/blink.cmp",
     build = "cargo build --release",
     event = "InsertEnter",
-    dependencies = { "saghen/blink.compat", "rcarriga/cmp-dap" },
+    dependencies = {
+      { "saghen/blink.compat", version = "*", opts = {} },
+      "rcarriga/cmp-dap",
+    },
     config = cfg("blink"),
     version = "1.*",
   },
@@ -141,7 +144,12 @@ return {
   },
 
   -- Autopairs
-  { "windwp/nvim-autopairs",               config = function() require("nvim-autopairs").setup({}) end },
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup({})
+    end,
+  },
 
   -- Rainbow delimiters
   -- Pinned because errors throw when I insert certain text
@@ -167,7 +175,7 @@ return {
   },
 
   -- Rainbow CSV
-  { "mechatroner/rainbow_csv",             ft = { "csv", "tsv" } },
+  { "mechatroner/rainbow_csv", ft = { "csv", "tsv" } },
 
   -- Keybind popup
   {
@@ -177,13 +185,18 @@ return {
   },
 
   -- Indentation guide
-  { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("ibl").setup()
+    end,
+  },
 
   -- Diff views
-  { "sindrets/diffview.nvim",              cmd = { "DiffviewOpen", "DiffviewClose" } },
+  { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewClose" } },
 
   -- Git UI
-  { "NeogitOrg/neogit",                    cmd = { "Neogit" } },
+  { "NeogitOrg/neogit", cmd = { "Neogit" } },
 
   -- Better fold
   {
@@ -194,10 +207,10 @@ return {
   },
 
   -- View all LSP errors at once
-  { "folke/trouble.nvim",                  config = cfg("trouble") },
+  { "folke/trouble.nvim", config = cfg("trouble") },
 
   -- Visualize undo history
-  { "mbbill/undotree",                     cmd = "UndotreeToggle" },
+  { "mbbill/undotree", cmd = "UndotreeToggle" },
 
   -- LSP messages
   {
@@ -237,9 +250,11 @@ return {
               end
             end,
           },
-          search = venv_dir and {
-            shared = { command = "$FD '/bin/python$' " .. venv_dir .. " --full-path --color never" },
-          } or nil,
+          search = venv_dir
+              and {
+                shared = { command = "$FD '/bin/python$' " .. venv_dir .. " --full-path --color never" },
+              }
+            or nil,
         })
       end)
     end,
