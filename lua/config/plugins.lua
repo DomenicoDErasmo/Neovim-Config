@@ -278,6 +278,22 @@ return {
     config = cfg("which_key"),
   },
 
+  -- Keycaster overlay: shows pressed keys in a floating box (screencast style)
+  {
+    "nvzone/showkeys",
+    dependencies = { "nvzone/volt" },
+    event = "VeryLazy",
+    opts = {
+      timeout = 3, -- seconds each key stays visible
+      maxkeys = 5,
+      show_count = true,
+    },
+    config = function(_, opts)
+      require("showkeys").setup(opts)
+      require("showkeys").toggle()
+    end,
+  },
+
   -- Indentation guide
   {
     "lukas-reineke/indent-blankline.nvim",

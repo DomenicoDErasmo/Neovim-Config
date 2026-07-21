@@ -15,6 +15,10 @@ vim.o.clipboard = "unnamedplus"
 -- Show in-progress command / partial keystrokes in the bottom-right
 vim.o.showcmd = true
 
+-- How long (ms) to wait for a mapped sequence to complete; also how long the
+-- partial keystrokes stay visible in the bottom-right (default 1000)
+vim.o.timeoutlen = 1000
+
 -- Rounded borders for all native floating windows (LSP hover, diagnostics, etc.)
 vim.o.winborder = "rounded"
 
