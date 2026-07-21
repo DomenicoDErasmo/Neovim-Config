@@ -12,6 +12,9 @@ vim.o.expandtab = true
 vim.o.termguicolors = true
 vim.o.clipboard = "unnamedplus"
 
+-- Show in-progress command / partial keystrokes in the bottom-right
+vim.o.showcmd = true
+
 -- Rounded borders for all native floating windows (LSP hover, diagnostics, etc.)
 vim.o.winborder = "rounded"
 
@@ -19,10 +22,7 @@ vim.o.winborder = "rounded"
 vim.o.splitright = true
 vim.o.splitbelow = true
 
-vim.o.foldcolumn = "1"
 vim.o.textwidth = 0
--- To ensure a space between fold level and relative number
-vim.o.statuscolumn = "%s%C %{v:relnum?v:relnum:v:lnum} "
 
 -- Start with everything unfolded
 vim.o.foldlevel = 99

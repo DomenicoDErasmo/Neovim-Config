@@ -287,6 +287,17 @@ return {
     end,
   },
 
+  -- Break bad habits: hints better motions and blocks repeated keys
+  {
+    "m4xshen/hardtime.nvim",
+    event = "BufReadPost",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    keys = { { "<leader>uH", "<cmd>Hardtime toggle<cr>", desc = "Toggle hardtime" } },
+    config = function()
+      require("hardtime").setup({})
+    end,
+  },
+
   -- Diff views
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewClose" } },
 
@@ -357,6 +368,15 @@ return {
       "theHamsta/nvim-dap-virtual-text",
     },
     config = cfg("dap"),
+  },
+
+  -- Relative line numbers using only left-hand digits for comfier vertical motion
+  {
+    "mluders/comfy-line-numbers.nvim",
+    event = "BufReadPost",
+    config = function()
+      require("comfy-line-numbers").setup({})
+    end,
   },
 
   -- Find and replace with ripgrep
