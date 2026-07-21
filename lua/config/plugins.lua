@@ -418,7 +418,12 @@ return {
     "mluders/comfy-line-numbers.nvim",
     event = "BufReadPost",
     config = function()
-      require("comfy-line-numbers").setup({})
+      require("comfy-line-numbers").setup({
+        -- Default hides labels in all 'nofile' buffers, which includes
+        -- vim-be-good's scratch game buffer. Keep only 'terminal' hidden so
+        -- comfy labels show in the practice game.
+        hidden_buffer_types = { "terminal" },
+      })
     end,
   },
 
