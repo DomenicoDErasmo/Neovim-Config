@@ -236,6 +236,15 @@ return {
     end,
   },
 
+  -- Surround: add/change/delete surrounding pairs (cs"' ds( ysiw))
+  {
+    "kylechui/nvim-surround",
+    event = "BufReadPost",
+    config = function()
+      require("nvim-surround").setup({})
+    end,
+  },
+
   -- Rainbow delimiters
   -- Pinned because errors throw when I insert certain text
   -- Checked as of 2026-04-14

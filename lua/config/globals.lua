@@ -12,6 +12,13 @@ vim.o.expandtab = true
 vim.o.termguicolors = true
 vim.o.clipboard = "unnamedplus"
 
+-- Rounded borders for all native floating windows (LSP hover, diagnostics, etc.)
+vim.o.winborder = "rounded"
+
+-- Open new splits to the right and below (instead of left/above)
+vim.o.splitright = true
+vim.o.splitbelow = true
+
 vim.o.foldcolumn = "1"
 vim.o.textwidth = 0
 -- To ensure a space between fold level and relative number
@@ -36,6 +43,24 @@ vim.o.smartcase = true
 
 -- Persistent undofile across sessions
 vim.o.undofile = true
+
+-- Briefly highlight yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.hl.on_yank()
+  end,
+})
+
+-- Restore the last cursor position when reopening a file
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function(args)
+    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+    local line_count = vim.api.nvim_buf_line_count(args.buf)
+    if mark[1] > 0 and mark[1] <= line_count then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
 
 -- Set colorcolumn, textwidth, and linebreak for markdown files
 vim.api.nvim_create_autocmd("FileType", {
@@ -64,5 +89,4 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = true,
-  float = { border = "rounded" },
 })
