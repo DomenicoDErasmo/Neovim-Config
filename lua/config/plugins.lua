@@ -319,6 +319,39 @@ return {
   {
     "ThePrimeagen/vim-be-good",
     cmd = "VimBeGood",
+    config = function()
+      -- comfy-line-numbers hides its label column in all 'nofile' buffers
+      -- (needed so it doesn't paint over telescope's borders). vim-be-good's
+      -- game buffer is also 'nofile', so re-enable comfy labels on the focused
+      -- game float. Guard against telescope, whose floats are 'nofile' too and
+      -- transiently focused while a picker builds.
+      local group = vim.api.nvim_create_augroup("VimBeGoodComfyLabels", { clear = true })
+      local function telescope_active()
+        for _, w in ipairs(vim.api.nvim_list_wins()) do
+          if vim.bo[vim.api.nvim_win_get_buf(w)].filetype:match("^Telescope") then
+            return true
+          end
+        end
+        return false
+      end
+      vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "InsertLeave" }, {
+        group = group,
+        callback = function()
+          vim.schedule(function()
+            local win = vim.api.nvim_get_current_win()
+            if not vim.api.nvim_win_is_valid(win) or telescope_active() then
+              return
+            end
+            local buf = vim.api.nvim_win_get_buf(win)
+            local floating = vim.api.nvim_win_get_config(win).relative ~= ""
+            if floating and vim.bo[buf].buftype == "nofile" and _G.get_label then
+              vim.wo[win].numberwidth = 4
+              vim.wo[win].statuscolumn = '%=%s%=%{v:virtnum > 0 ? "" : v:lua.get_label(v:lnum, v:relnum)} '
+            end
+          end)
+        end,
+      })
+    end,
   },
 
   -- Indentation guide
@@ -419,10 +452,12 @@ return {
     event = "BufReadPost",
     config = function()
       require("comfy-line-numbers").setup({
-        -- Default hides labels in all 'nofile' buffers, which includes
-        -- vim-be-good's scratch game buffer. Keep only 'terminal' hidden so
-        -- comfy labels show in the practice game.
-        hidden_buffer_types = { "terminal" },
+        -- Keep the default 'nofile' hidden (telescope's border/results/preview
+        -- windows are 'nofile'; showing the label column there paints over the
+        -- borders) and add 'prompt' (telescope's prompt window). vim-be-good's
+        -- game buffer is also 'nofile', so its labels are re-enabled by an
+        -- autocmd in the vim-be-good plugin spec.
+        hidden_buffer_types = { "terminal", "nofile", "prompt" },
       })
     end,
   },
