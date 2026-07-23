@@ -4,6 +4,7 @@ require("lualine").setup({
     lualine_b = { "branch", "diff", "diagnostics" },
     lualine_c = { { "filename", path = 1 } },
     lualine_x = {
+      { "searchcount" },
       {
         function()
           local clients = vim.lsp.get_clients({ bufnr = 0 })
