@@ -1,9 +1,5 @@
 # Neovim config
 
-A modern Lua config built on [lazy.nvim](https://github.com/folke/lazy.nvim),
-native LSP (`vim.lsp.config`/`vim.lsp.enable`), [blink.cmp](https://github.com/saghen/blink.cmp),
-`conform.nvim` (format) and `nvim-lint` (lint).
-
 ## Requirements
 
 - **Neovim ≥ 0.11** — the LSP configs use `vim.lsp.config` / `vim.lsp.enable`,
