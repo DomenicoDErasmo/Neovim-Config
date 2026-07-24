@@ -73,3 +73,5 @@ require("nvim-treesitter.configs").setup({
     },
   },
 })
+
+require("config.treesitter_compat")
