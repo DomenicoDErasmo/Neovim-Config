@@ -7,6 +7,7 @@ end
 return {
   clangd = resolve_path("NVIM_CLANGD", "clangd"),
   lua_ls = resolve_path("NVIM_LUA_LS", "lua-language-server"),
+  nixd = resolve_path("NVIM_NIXD", "nixd"),
   rust_analyzer = resolve_path("NVIM_RUST_ANALYZER", "rust-analyzer"),
   ruff = require("neoconf").get("ruff_path") or vim.fn.exepath("ruff"),
   ruff_stdin_args = { "--stdin-filename", "$FILENAME", "-" },

@@ -40,6 +40,7 @@ return {
       require("neoconf.config").options.local_settings = ".neoconf.json"
       require("config.lsp.cpp")
       require("config.lsp.lua")
+      require("config.lsp.nix")
       require("config.lsp.python")
       require("config.lsp.proto")
       require("config.lsp.rust")
