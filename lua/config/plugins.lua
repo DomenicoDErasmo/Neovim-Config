@@ -316,17 +316,17 @@ return {
     opts = {},
   },
 
-  -- Practice game for vim motions: run :VimBeGood
+  -- Practice game for vim motions: run :VimBeBetter
   {
-    "ThePrimeagen/vim-be-good",
-    cmd = "VimBeGood",
+    "szymonwilczek/vim-be-better",
+    cmd = "VimBeBetter",
     config = function()
       -- comfy-line-numbers hides its label column in all 'nofile' buffers
-      -- (needed so it doesn't paint over telescope's borders). vim-be-good's
+      -- (needed so it doesn't paint over telescope's borders). vim-be-better's
       -- game buffer is also 'nofile', so re-enable comfy labels on the focused
       -- game float. Guard against telescope, whose floats are 'nofile' too and
       -- transiently focused while a picker builds.
-      local group = vim.api.nvim_create_augroup("VimBeGoodComfyLabels", { clear = true })
+      local group = vim.api.nvim_create_augroup("VimBeBetterComfyLabels", { clear = true })
       local function telescope_active()
         for _, w in ipairs(vim.api.nvim_list_wins()) do
           if vim.bo[vim.api.nvim_win_get_buf(w)].filetype:match("^Telescope") then
@@ -455,9 +455,9 @@ return {
       require("comfy-line-numbers").setup({
         -- Keep the default 'nofile' hidden (telescope's border/results/preview
         -- windows are 'nofile'; showing the label column there paints over the
-        -- borders) and add 'prompt' (telescope's prompt window). vim-be-good's
+        -- borders) and add 'prompt' (telescope's prompt window). vim-be-better's
         -- game buffer is also 'nofile', so its labels are re-enabled by an
-        -- autocmd in the vim-be-good plugin spec.
+        -- autocmd in the vim-be-better plugin spec.
         hidden_buffer_types = { "terminal", "nofile", "prompt" },
       })
     end,
