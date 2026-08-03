@@ -55,6 +55,8 @@ lua/config/
   globals.lua         -- options / autocommands
   keymap.lua          -- keymaps (leader = <Space>)
   paths.lua           -- external tool paths (ruff, ty)
+  pytest_fixtures.lua -- pytest fixture lookup, used as a `gd` fallback
   lsp/                -- per-server LSP configs (cpp, lua, python, proto)
   *.lua               -- one file per plugin/feature
 ```
+

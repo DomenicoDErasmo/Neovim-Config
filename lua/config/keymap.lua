@@ -5,7 +5,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Go to definition
     -- Related, jump lists:
     -- Ctrl+o to jump back and Ctrl-i to jump forward
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
+    -- ty can't see pytest fixtures (they're injected by name, not by any
+    -- construct a type checker tracks), so try the fixture resolver first;
+    -- it only reports success when it actually jumped.
+    vim.keymap.set("n", "gd", function()
+      if require("config.pytest_fixtures").goto_fixture() then
+        return
+      end
+      vim.lsp.buf.definition()
+    end, { buffer = buf, desc = "Go to definition" })
     -- References
     vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = buf, desc = "References" })
     -- Type definition
