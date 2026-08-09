@@ -10,7 +10,11 @@ require("config.lsp").setup("rust_analyzer", {
   end,
   settings = {
     ["rust-analyzer"] = {
-      cargo = { allFeatures = true, sysrootSrc = require("config.paths").rust_src },
+      cargo = {
+        allFeatures = true,
+        sysroot = require("config.paths").rust_sysroot,
+        sysrootSrc = require("config.paths").rust_src,
+      },
       checkOnSave = true,
       rustfmt = { overrideCommand = { "rustfmt" } },
       check = {
