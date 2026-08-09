@@ -20,6 +20,11 @@ require("lualine").setup({
             )
         end,
       },
+      {
+        function()
+          return vim.lsp.status()
+        end,
+      },
       "encoding",
       "fileformat",
       "filetype",
