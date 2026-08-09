@@ -11,4 +11,5 @@ require("which-key").add({
   { "<leader>d", group = "debug" },
   { "<leader>u", group = "ui/toggle" },
   { "<leader>p", group = "python" },
+  { "<leader>l", group = "leetcode" },
 })
