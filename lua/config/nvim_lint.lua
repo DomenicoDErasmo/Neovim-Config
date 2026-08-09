@@ -83,8 +83,12 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
   callback = function(args)
     local ft = vim.bo.filetype
     if ft == "python" then
-      lint.linters["ruff"].args = ruff_args_for_buf()
-      lint.try_lint("ruff")
+      -- ruff isn't always on $PATH (only pulled in by project-local direnv
+      -- shells); an empty cmd makes nvim-lint spawn "" and throw ENOENT
+      if lint.linters["ruff"].cmd ~= "" then
+        lint.linters["ruff"].args = ruff_args_for_buf()
+        lint.try_lint("ruff")
+      end
       -- ty is slower (~2s/file) so skip it on InsertLeave
       if args.event ~= "InsertLeave" then
         local cwd = ty_cwd_for_buf()
