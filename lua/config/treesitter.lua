@@ -13,6 +13,7 @@ require("nvim-treesitter.configs").setup({
     "yaml",
     "proto",
     "rust",
+    "html",
   },
   highlight = {
     enable = true,

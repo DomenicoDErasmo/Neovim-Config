@@ -355,6 +355,29 @@ return {
     end,
   },
 
+  -- LeetCode problems inside Neovim
+  {
+    "kawre/leetcode.nvim",
+    -- nvim-treesitter loads lazily on BufReadPost, so :TSUpdate doesn't exist
+    -- yet at install time; "html" is already in treesitter.lua's
+    -- ensure_installed, which fetches it on first buffer read instead.
+    build = function()
+      pcall(vim.cmd, "TSUpdate html")
+    end,
+    cmd = "Leet",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    keys = {
+      { "<leader>lc", "<cmd>Leet<cr>", desc = "Open LeetCode" },
+      { "<leader>ll", "<cmd>Leet list<cr>", desc = "LeetCode problem list" },
+      { "<leader>lt", "<cmd>Leet tabs<cr>", desc = "LeetCode open tabs" },
+    },
+    config = cfg("leetcode"),
+  },
+
   -- Indentation guide
   {
     "lukas-reineke/indent-blankline.nvim",
