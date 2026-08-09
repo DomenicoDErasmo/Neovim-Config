@@ -9,6 +9,9 @@ return {
   lua_ls = resolve_path("NVIM_LUA_LS", "lua-language-server"),
   nixd = resolve_path("NVIM_NIXD", "nixd"),
   rust_analyzer = resolve_path("NVIM_RUST_ANALYZER", "rust-analyzer"),
+  -- Rust standard library source, for rust-analyzer's sysrootSrc setting.
+  -- No PATH-lookup fallback since it's a source dir, not an executable.
+  rust_src = os.getenv("NVIM_RUST_SRC"),
   ruff = require("neoconf").get("ruff_path") or vim.fn.exepath("ruff"),
   ruff_stdin_args = { "--stdin-filename", "$FILENAME", "-" },
   ruff_lint_args = { "--quiet", "--no-fix", "--output-format", "json", "--stdin-filename", "$FILENAME", "-" },
