@@ -291,6 +291,36 @@ return {
     },
     config = function(_, opts)
       require("showkeys").setup(opts)
+
+      -- Upstream bug: the hide timer is restarted on every keypress, but
+      -- timer:stop() can't cancel a callback vim.schedule() has already
+      -- queued. When the main loop stalls (e.g. format-on-save), two
+      -- clear_and_close calls queue up; the second one hits a nil state.win
+      -- and errors out of nvim_win_set_config. Guard both entry points.
+      local state = require("showkeys.state")
+      local utils = require("showkeys.utils")
+
+      local function win_alive()
+        return state.win ~= nil and vim.api.nvim_win_is_valid(state.win)
+      end
+
+      local redraw = utils.redraw
+      utils.redraw = function()
+        if win_alive() then
+          redraw()
+        end
+      end
+
+      local clear_and_close = utils.clear_and_close
+      utils.clear_and_close = function()
+        if win_alive() then
+          clear_and_close()
+        else
+          state.keys = {}
+          state.win = nil
+        end
+      end
+
       require("showkeys").toggle()
     end,
   },

@@ -1,12 +1,18 @@
 local paths = require("config.paths")
 
+-- Prefer prettier on PATH; fall back to a local npm install in $HOME.
+local prettier = vim.fn.exepath("prettier")
+if prettier == "" then
+  prettier = os.getenv("HOME") .. "/node_modules/.bin/prettier"
+end
+
 require("conform").setup({
   formatters = {
     stylua = {
       command = vim.fn.exepath("stylua"),
     },
     prettier = {
-      command = vim.fn.exepath("prettier"),
+      command = prettier,
       prepend_args = { "--prose-wrap", "always", "--print-width", "80" },
     },
     ruff_fix = {
