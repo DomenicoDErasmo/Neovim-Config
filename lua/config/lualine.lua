@@ -7,24 +7,13 @@ require("lualine").setup({
       { "searchcount" },
       {
         function()
-          local clients = vim.lsp.get_clients({ bufnr = 0 })
-          if #clients == 0 then
-            return ""
-          end
-          return " "
-            .. table.concat(
-              vim.tbl_map(function(c)
-                return c.name
-              end, clients),
-              " "
-            )
+          local names = vim.iter(vim.lsp.get_clients({ bufnr = 0 })):map(function(c)
+            return c.name
+          end)
+          return names:peek() and " " .. names:join(" ") or ""
         end,
       },
-      {
-        function()
-          return vim.lsp.status()
-        end,
-      },
+      { vim.lsp.status },
       "encoding",
       "fileformat",
       "filetype",

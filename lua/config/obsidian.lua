@@ -1,21 +1,13 @@
-local workspaces = {
-  { name = "notes", path = "~/notes/" },
-}
-
 require("obsidian").setup({
-  workspaces = workspaces,
+  workspaces = {
+    { name = "notes", path = "~/notes/" },
+  },
 
   ui = { enable = false },
 
-  -- Use the title as the filename instead of auto-generated ID
+  -- Use the title as the filename instead of an auto-generated ID.
   note_id_func = function(title)
-    -- If title is provided, use it as the filename
-    if title ~= nil then
-      return title
-    else
-      -- Fallback: use timestamp if no title provided
-      return tostring(os.time())
-    end
+    return title or tostring(os.time())
   end,
 
   legacy_commands = false,

@@ -29,40 +29,29 @@ dapui.setup({
 })
 require("nvim-dap-virtual-text").setup()
 
--- VSCode-style gutter icons
-vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
-vim.fn.sign_define(
-  "DapBreakpointCondition",
-  { text = "◐", texthl = "DapBreakpointCondition", linehl = "", numhl = "" }
-)
-vim.fn.sign_define("DapBreakpointRejected", { text = "●", texthl = "DapBreakpointRejected", linehl = "", numhl = "" })
-vim.fn.sign_define("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", {
-  text = "▶",
-  texthl = "DapStopped",
-  linehl = "DapStoppedLine",
-  numhl = "",
-})
-
-vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "#e51400" })
-vim.api.nvim_set_hl(0, "DapBreakpointCondition", { fg = "#e51400" })
-vim.api.nvim_set_hl(0, "DapBreakpointRejected", { fg = "#888888" })
-vim.api.nvim_set_hl(0, "DapLogPoint", { fg = "#61afef" })
-vim.api.nvim_set_hl(0, "DapStopped", { fg = "#ffcc00" })
+-- VSCode-style gutter icons: name -> { glyph, fg, linehl }
+for name, sign in pairs({
+  DapBreakpoint = { "●", "#e51400" },
+  DapBreakpointCondition = { "◐", "#e51400" },
+  DapBreakpointRejected = { "●", "#888888" },
+  DapLogPoint = { "◆", "#61afef" },
+  DapStopped = { "▶", "#ffcc00", linehl = "DapStoppedLine" },
+}) do
+  vim.fn.sign_define(name, { text = sign[1], texthl = name, linehl = sign.linehl or "", numhl = "" })
+  vim.api.nvim_set_hl(0, name, { fg = sign[2] })
+end
 vim.api.nvim_set_hl(0, "DapStoppedLine", { bg = "#2e2d2d" })
 
 -- Auto open/close UI with debug sessions
-dap.listeners.before.attach.dapui_config = function()
-  dapui.open()
+for _, event in ipairs({ "attach", "launch" }) do
+  dap.listeners.before[event].dapui_config = function()
+    dapui.open()
+  end
 end
-dap.listeners.before.launch.dapui_config = function()
-  dapui.open()
-end
-dap.listeners.before.event_terminated.dapui_config = function()
-  dapui.close()
-end
-dap.listeners.before.event_exited.dapui_config = function()
-  dapui.close()
+for _, event in ipairs({ "event_terminated", "event_exited" }) do
+  dap.listeners.before[event].dapui_config = function()
+    dapui.close()
+  end
 end
 
 local map = vim.keymap.set

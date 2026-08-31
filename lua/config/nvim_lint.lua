@@ -1,15 +1,7 @@
 local lint = require("lint")
 local paths = require("config.paths")
 
-local home = os.getenv("HOME")
-
--- Prefer markdownlint-cli2 on PATH; fall back to a local npm install in $HOME.
-local markdownlint = vim.fn.exepath("markdownlint-cli2")
-if markdownlint == "" then
-  markdownlint = home .. "/node_modules/.bin/markdownlint-cli2"
-end
-lint.linters["markdownlint-cli2"].cmd = markdownlint
-
+lint.linters["markdownlint-cli2"].cmd = paths.markdownlint
 lint.linters["ruff"].cmd = paths.ruff
 
 -- Walk up from `start`'s directory looking for any of `names`.
@@ -18,14 +10,9 @@ local function find_upward(names, start)
   if start == "" then
     return nil
   end
-  local dir = vim.fn.fnamemodify(start, ":h")
-  while dir ~= "/" do
-    for _, name in ipairs(names) do
-      if vim.fn.filereadable(dir .. "/" .. name) == 1 then
-        return dir .. "/" .. name, dir
-      end
-    end
-    dir = vim.fn.fnamemodify(dir, ":h")
+  local found = vim.fs.find(names, { upward = true, path = vim.fs.dirname(start) })[1]
+  if found then
+    return found, vim.fs.dirname(found)
   end
 end
 
@@ -74,9 +61,10 @@ local function ty_cwd_for_buf()
   return config_dir
 end
 
+-- Only markdown is dispatched through `try_lint()` with no name; the python
+-- linters are invoked explicitly below.
 lint.linters_by_ft = {
   markdown = { "markdownlint-cli2" },
-  python = { "ruff" },
 }
 
 vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {

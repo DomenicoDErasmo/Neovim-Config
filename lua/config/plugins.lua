@@ -70,21 +70,9 @@ return {
     },
     cmd = "Telescope",
     keys = {
-      {
-        "<leader>fa",
-        find_files(false),
-        desc = "Telescope find files (exclude hidden files)",
-      },
-      {
-        "<leader>ff",
-        find_files(true),
-        desc = "Telescope find files",
-      },
-      {
-        "<leader>fg",
-        builtin("live_grep"),
-        desc = "Telescope live grep",
-      },
+      { "<leader>fa", find_files(false), desc = "Telescope find files (exclude hidden files)" },
+      { "<leader>ff", find_files(true), desc = "Telescope find files" },
+      { "<leader>fg", builtin("live_grep"), desc = "Telescope live grep" },
       {
         "<leader>fG",
         builtin("live_grep", { additional_args = { "--fixed-strings" } }),
@@ -103,31 +91,11 @@ return {
         end,
         desc = "Telescope live grep (filetype)",
       },
-      {
-        "<leader>fo",
-        builtin("oldfiles"),
-        desc = "Telescope recent files",
-      },
-      {
-        "<leader>fb",
-        builtin("buffers"),
-        desc = "Telescope buffers",
-      },
-      {
-        "<leader>fh",
-        builtin("help_tags"),
-        desc = "Telescope help tags",
-      },
-      {
-        "<leader>fs",
-        builtin("lsp_document_symbols"),
-        desc = "Document symbols",
-      },
-      {
-        "<leader>fS",
-        builtin("lsp_dynamic_workspace_symbols"),
-        desc = "Workspace symbols",
-      },
+      { "<leader>fo", builtin("oldfiles"), desc = "Telescope recent files" },
+      { "<leader>fb", builtin("buffers"), desc = "Telescope buffers" },
+      { "<leader>fh", builtin("help_tags"), desc = "Telescope help tags" },
+      { "<leader>fs", builtin("lsp_document_symbols"), desc = "Document symbols" },
+      { "<leader>fS", builtin("lsp_dynamic_workspace_symbols"), desc = "Workspace symbols" },
     },
     config = cfg("telescope"),
   },

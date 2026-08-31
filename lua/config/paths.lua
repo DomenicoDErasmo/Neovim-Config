@@ -4,6 +4,12 @@ local function resolve_path(env, default)
   return os.getenv(env) or vim.fn.exepath(default)
 end
 
+-- Prefer an npm tool on PATH; fall back to a local install in $HOME.
+local function npm_bin(name)
+  local found = vim.fn.exepath(name)
+  return found ~= "" and found or os.getenv("HOME") .. "/node_modules/.bin/" .. name
+end
+
 return {
   clangd = resolve_path("NVIM_CLANGD", "clangd"),
   lua_ls = resolve_path("NVIM_LUA_LS", "lua-language-server"),
@@ -19,4 +25,6 @@ return {
   ruff_lint_args = { "--quiet", "--no-fix", "--output-format", "json", "--stdin-filename", "$FILENAME", "-" },
   -- `ty check` linter; same binary as the ty LSP server ($NVIM_TY).
   ty = os.getenv("NVIM_TY") or "ty",
+  markdownlint = npm_bin("markdownlint-cli2"),
+  prettier = npm_bin("prettier"),
 }

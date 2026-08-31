@@ -158,26 +158,17 @@ local function fixtures_in_file(path)
   return found
 end
 
--- Directories from the file's own directory up to (and including) the one
--- holding a root marker. Bounded by the project root so we never walk to /.
-local function dirs_up_to_root(start_dir)
-  local dirs = {}
-  local dir = start_dir
-  while dir and dir ~= "/" and dir ~= "" do
-    table.insert(dirs, dir)
-    for _, marker in ipairs(ROOT_MARKERS) do
-      local p = dir .. "/" .. marker
-      if vim.fn.filereadable(p) == 1 or vim.fn.isdirectory(p) == 1 then
-        return dirs
-      end
-    end
-    local parent = vim.fn.fnamemodify(dir, ":h")
-    if parent == dir then
-      break
-    end
-    dir = parent
-  end
-  return dirs
+-- Every conftest.py from the file's own directory up to (and including) the
+-- project root. Bounded by the root so we never walk to /.
+local function conftests_up_to_root(file)
+  local root = vim.fs.root(file, ROOT_MARKERS)
+  return vim.fs.find("conftest.py", {
+    upward = true,
+    path = vim.fs.dirname(file),
+    -- `stop` is exclusive, so step above the root to keep its own conftest.
+    stop = root and vim.fs.dirname(root) or nil,
+    limit = math.huge,
+  })
 end
 
 -- The interpreter to ask about `_pytest`: the selected venv when there is one
@@ -263,13 +254,10 @@ local function resolve(name, bufnr)
     return own
   end
 
-  for _, dir in ipairs(dirs_up_to_root(vim.fn.fnamemodify(file, ":h"))) do
-    local conftest = dir .. "/conftest.py"
-    if vim.fn.filereadable(conftest) == 1 then
-      local hit = fixtures_in_file(conftest)[name]
-      if hit then
-        return hit
-      end
+  for _, conftest in ipairs(conftests_up_to_root(file)) do
+    local hit = fixtures_in_file(conftest)[name]
+    if hit then
+      return hit
     end
   end
 

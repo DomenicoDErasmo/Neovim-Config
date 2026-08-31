@@ -22,7 +22,6 @@ vim.o.timeoutlen = 1000
 -- Rounded borders for all native floating windows (LSP hover, diagnostics, etc.)
 vim.o.winborder = "rounded"
 
--- Open new splits to the right and below (instead of left/above)
 vim.o.splitright = true
 vim.o.splitbelow = true
 
@@ -32,7 +31,6 @@ vim.o.textwidth = 0
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 
--- Keep cursor a few lines from the bottom of the screen when scrolling
 vim.o.scrolloff = 6
 
 -- Set update time for gitsigns and vim-illuminate on cursor hold
@@ -41,11 +39,9 @@ vim.o.updatetime = 300
 -- Separate sign column from gitsigns/diagnostics
 vim.o.signcolumn = "yes"
 
--- Custom search
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Persistent undofile across sessions
 vim.o.undofile = true
 
 -- Briefly highlight yanked text
