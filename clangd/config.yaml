@@ -1,0 +1,17 @@
+# clangd fallback for real libc++ headers (e.g. go-to-definition from
+# project code into <algorithm>): those files live entirely outside any
+# project's compile_commands.json, so clangd can't associate them with a
+# translation unit and parses them with generic defaults instead - no
+# -std flag, and guessed as Objective-C++ from the ambiguous .h extension.
+# That leaves _LIBCPP_STD_VER undefined, greying out every version-gated
+# block (e.g. C++20/23 <algorithm> additions).
+#
+# Matched by name pattern rather than a literal store path so it survives
+# libcxx version/hash changes.
+If:
+  PathMatch: .*-libcxx-[0-9.]+-dev/include/c\+\+/v1/.*
+CompileFlags:
+  Add:
+    - -xc++-header
+    - -std=c++23
+    - -stdlib=libc++
