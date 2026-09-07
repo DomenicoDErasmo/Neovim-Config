@@ -58,9 +58,5 @@ lua/config/
   pytest_fixtures.lua -- pytest fixture lookup, used as a `gd` fallback
   lsp/                -- per-server LSP configs (cpp, lua, python, proto)
   *.lua               -- one file per plugin/feature
-clangd/config.yaml     -- global clangd user config (deployed to
-                          ~/.config/clangd/config.yaml by the home-manager
-                          module that also sources init.lua/lua/ from this
-                          repo)
 ```
 
