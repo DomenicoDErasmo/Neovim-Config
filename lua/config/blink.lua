@@ -22,7 +22,7 @@ require("blink.cmp").setup({
   sources = {
     default = { "lsp", "path", "buffer", "snippets" },
     per_filetype = {
-      markdown = { "lsp", "path", "snippets" },
+      markdown = { "lsp", "path" },
       ["dap-repl"] = { "dap" },
       dapui_watches = { "dap" },
       dapui_hover = { "dap" },
