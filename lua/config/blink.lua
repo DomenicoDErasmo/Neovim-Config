@@ -29,6 +29,13 @@ require("blink.cmp").setup({
     },
     providers = {
       dap = { name = "dap", module = "blink.compat.source" },
+      snippets = {
+        opts = {
+          filter_snippets = function(_, file)
+            return not file:match("relm4")
+          end,
+        },
+      },
     },
   },
   signature = { enabled = true, window = { show_documentation = true } },
