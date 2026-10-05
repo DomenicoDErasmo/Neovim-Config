@@ -12,6 +12,7 @@ end
 
 return {
   clangd = resolve_path("NVIM_CLANGD", "clangd"),
+  clang_format = resolve_path("CLANG_FORMAT", "clang-format"),
   lua_ls = resolve_path("NVIM_LUA_LS", "lua-language-server"),
   nixd = resolve_path("NVIM_NIXD", "nixd"),
   rust_analyzer = resolve_path("NVIM_RUST_ANALYZER", "rust-analyzer"),

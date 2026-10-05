@@ -9,6 +9,9 @@ require("conform").setup({
       command = paths.prettier,
       prepend_args = { "--prose-wrap", "always", "--print-width", "80" },
     },
+    ["clang-format"] = {
+      command = paths.clang_format,
+    },
     ruff_fix = {
       command = paths.ruff,
       args = vim.list_extend({ "check", "--fix" }, paths.ruff_stdin_args),

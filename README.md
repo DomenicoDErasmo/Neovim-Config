@@ -17,6 +17,7 @@ without setting any of them — set a variable only when the tool isn't on your
 | Variable | Used for | Fallback if unset |
 |----------|----------|-------------------|
 | `NVIM_CLANGD` | `clangd` LSP command (C/C++) | `clangd` on `PATH` |
+| `CLANG_FORMAT` | `clang-format` binary for `conform.nvim` (C/C++) | `clang-format` on `PATH` |
 | `NVIM_LUA_LS` | `lua-language-server` LSP command | `lua-language-server` on `PATH` |
 | `NVIM_TY` | [`ty`](https://github.com/astral-sh/ty) binary — both the Python LSP server *and* the `ty check` linter | `ty` on `PATH` |
 | `NVIM_DEBUGPY_PYTHON` | Python interpreter for `nvim-dap` (must have `debugpy` installed) | `python3` on `PATH` |
@@ -26,6 +27,7 @@ without setting any of them — set a variable only when the tool isn't on your
 
 ```bash
 export NVIM_CLANGD='/path/to/clangd'
+export CLANG_FORMAT='/path/to/clang-format'
 export NVIM_LUA_LS="$HOME/opt/lua-language-server/bin/lua-language-server"
 export NVIM_TY='/path/to/ty'
 export NVIM_DEBUGPY_PYTHON="$HOME/.venvs/dev/bin/python"
