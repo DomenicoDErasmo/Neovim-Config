@@ -4,6 +4,11 @@ local function cfg(name)
   end
 end
 
+-- nvim-treesitter(-textobjects) `main` needs Neovim 0.12+; the frozen `master`
+-- branch only works up to 0.11. Pick per machine.
+local ts_main = vim.fn.has("nvim-0.12") == 1
+local ts_branch = ts_main and "main" or "master"
+
 -- Telescope find_files, optionally including hidden files. Always skips .git.
 local function find_files(hidden)
   return function()
@@ -127,18 +132,27 @@ return {
   -- Treesitter - Syntax parser
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
+    branch = ts_branch,
     build = ":TSUpdate",
-    event = "BufReadPost",
+    -- `main` doesn't support lazy-loading
+    lazy = not ts_main,
+    event = not ts_main and "BufReadPost" or nil,
     config = cfg("treesitter"),
   },
 
   -- Treesitter text objects (select/move/swap by function, class, argument, block)
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    branch = "master",
+    branch = ts_branch,
     event = "BufReadPost",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    init = function()
+      -- These built-in ftplugins set buffer-local ]] / [[ / ]m maps that
+      -- would shadow the global textobject moves.
+      vim.g.no_python_maps = true
+      vim.g.no_rust_maps = true
+      vim.g.no_markdown_maps = true
+    end,
     config = cfg("treesitter_textobjects"),
   },
 
@@ -342,12 +356,7 @@ return {
   -- LeetCode problems inside Neovim
   {
     "kawre/leetcode.nvim",
-    -- nvim-treesitter loads lazily on BufReadPost, so :TSUpdate doesn't exist
-    -- yet at install time; "html" is already in treesitter.lua's
-    -- ensure_installed, which fetches it on first buffer read instead.
-    build = function()
-      pcall(vim.cmd, "TSUpdate html")
-    end,
+    -- Needs the html parser for problem descriptions; treesitter.lua installs it.
     cmd = "Leet",
     dependencies = {
       "nvim-lua/plenary.nvim",
