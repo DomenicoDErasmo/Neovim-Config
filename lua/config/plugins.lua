@@ -4,11 +4,6 @@ local function cfg(name)
   end
 end
 
--- nvim-treesitter(-textobjects) `main` needs Neovim 0.12+; the frozen `master`
--- branch only works up to 0.11. Pick per machine.
-local ts_main = vim.fn.has("nvim-0.12") == 1
-local ts_branch = ts_main and "main" or "master"
-
 -- Telescope find_files, optionally including hidden files. Always skips .git.
 local function find_files(hidden)
   return function()
@@ -132,18 +127,17 @@ return {
   -- Treesitter - Syntax parser
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = ts_branch,
+    branch = "main",
     build = ":TSUpdate",
     -- `main` doesn't support lazy-loading
-    lazy = not ts_main,
-    event = not ts_main and "BufReadPost" or nil,
+    lazy = false,
     config = cfg("treesitter"),
   },
 
   -- Treesitter text objects (select/move/swap by function, class, argument, block)
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    branch = ts_branch,
+    branch = "main",
     event = "BufReadPost",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     init = function()

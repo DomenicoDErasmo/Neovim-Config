@@ -1,8 +1,3 @@
-if vim.fn.has("nvim-0.12") == 0 then
-  require("config.treesitter_master")
-  return
-end
-
 local parsers = {
   "lua",
   "cpp",

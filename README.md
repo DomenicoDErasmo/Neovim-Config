@@ -2,8 +2,8 @@
 
 ## Requirements
 
-- **Neovim ≥ 0.11** — the LSP configs use `vim.lsp.config` / `vim.lsp.enable`,
-  which do not exist on 0.10.
+- **Neovim ≥ 0.12** — `nvim-treesitter` / `nvim-treesitter-textobjects` track
+  their `main` branch, which needs 0.12+.
 - A C compiler + `make` (for `telescope-fzf-native`) and `cargo` (for `blink.cmp`).
 - External tools per language (see below); anything not found is simply skipped.
 
