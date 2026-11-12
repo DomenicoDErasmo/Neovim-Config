@@ -62,13 +62,14 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
--- Set colorcolumn, textwidth, and linebreak for markdown files
+-- Set colorcolumn and textwidth for markdown files.
+-- No 'linebreak': on 0.13-dev it makes any virt_lines below the last line
+-- (precognition hints, obsidian footer) raise "E315: ml_get: Invalid lnum".
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
     vim.opt_local.colorcolumn = "81"
     vim.opt_local.textwidth = 80
-    vim.opt_local.linebreak = true
     vim.opt_local.conceallevel = 2
   end,
 })
